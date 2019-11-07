@@ -1,5 +1,11 @@
-import { Action, combineReducers } from "redux";
+import { Action, ActionTypes } from "./actions";
+import { State, create } from "./state";
 
-const rootReducer = (state: any, action: Action) => state;
-
-export const reducers = combineReducers(rootReducer);
+export const reducer = (state: State = create(), action: Action): State => {
+  switch (action.type) {
+    case ActionTypes.SET_CONTAINER_DIMENSIONS:
+      return { ...state, containerDimensions: action.dimensions };
+    default:
+      return state;
+  }
+};

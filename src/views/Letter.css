@@ -1,0 +1,20 @@
+.Letter {
+  border-radius: 8px;
+  background-color: burlywood;
+  color: #443322;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 0 3px #444444;
+  opacity: 0.9;
+  transition: ease;
+  text-shadow: 0 0 1px #444444;
+  cursor: pointer;
+  transition: opacity 500ms, height 150ms, width 150ms;
+
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.Letter:hover {
+  opacity: 1;
+}
