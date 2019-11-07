@@ -7,10 +7,17 @@ import { setContainerDimensions } from "../actions";
 import Letter from "./Letter";
 import { Letter as LetterType } from "../types";
 import * as _ from "lodash";
+import { State } from "../state";
+import { getFreeLetters } from "../selectors";
 
-type Props = {
+interface StateProps {
+  freeLetters: LetterType.Letter[];
+}
+interface DispatchProps {
   onMeasure: Effect.Effect<Dimensions.Dimensions>;
-};
+}
+
+type Props = StateProps & DispatchProps;
 
 export class App extends React.PureComponent<Props> {
   private primaryContainerRef: React.RefObject<
@@ -27,17 +34,15 @@ export class App extends React.PureComponent<Props> {
   }
 
   render = () => {
+    const { freeLetters } = this.props;
     return (
       <div className="App">
         <div className="Container" ref={this.primaryContainerRef}>
-          <Letter letter={LetterType.create("a")} />
-          <Letter letter={LetterType.create("b")} />
-          <Letter letter={LetterType.create("c")} />
-          <Letter letter={LetterType.create("d")} />
-          <Letter letter={LetterType.create("e")} />
-          <Letter letter={LetterType.create("e")} />
-          <Letter letter={LetterType.create("e")} />
-          <Letter letter={LetterType.create("e")} />
+          {freeLetters.map(l => (
+            <React.Fragment key={l.id}>
+              <Letter letter={l} />
+            </React.Fragment>
+          ))}
         </div>
       </div>
     );
@@ -62,7 +67,11 @@ export const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(setContainerDimensions(dimensions))
 });
 
+export const mapStateToProps = (state: State): StateProps => ({
+  freeLetters: getFreeLetters(state)
+});
+
 export default connect(
-  undefined,
+  mapStateToProps,
   mapDispatchToProps
 )(App);

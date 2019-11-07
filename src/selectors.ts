@@ -8,3 +8,8 @@ export const getLetterDimensions = createSelector(
   getState,
   state => Dimensions.square(state.containerDimensions.width / 8)
 );
+
+export const getFreeLetters = createSelector(
+  getState,
+  state => state.freeLetters
+);
