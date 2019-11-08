@@ -18,8 +18,14 @@
   background-color: #ddefef;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .FreeSpace {
   display: flex;
+}
+
+.Spells {
+  font-size: 3rem;
 }

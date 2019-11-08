@@ -44,3 +44,8 @@ export const getValidTargetTypes = createSelector(
     }
   }
 );
+
+export const getSpells = createSelector(
+  getState,
+  state => state.spells
+);

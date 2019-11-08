@@ -67,3 +67,10 @@ export const swap = (
     return { slotIds, size, contents };
   }
 };
+
+export const spells = ({ contents }: Slate): string => {
+  return contents
+    .map(c => (c == null ? " " : c.alpha))
+    .join("")
+    .trim();
+};

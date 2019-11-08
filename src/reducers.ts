@@ -11,7 +11,8 @@ export const reducer = (state: State = create(), action: Action): State => {
     case ActionTypes.SELECT:
       return { ...state, selected: action.selection };
     case ActionTypes.CHOOSE_TARGET:
-      return chooseTarget(state, action.target.type, action.target.id);
+      const updated = chooseTarget(state, action.target.type, action.target.id);
+      return { ...updated, spells: Slate.spells(updated.slate) };
     case ActionTypes.CLEAR_SELECTION:
       return { ...state, selected: undefined };
     default:

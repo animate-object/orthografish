@@ -11,13 +11,14 @@ import {
 import { Letter as LetterType } from "../types";
 import * as _ from "lodash";
 import { State } from "../state";
-import { getFreeLetters, getValidTargetTypes } from "../selectors";
+import { getFreeLetters, getValidTargetTypes, getSpells } from "../selectors";
 import FreeLetter from "./FreeLetter";
 import Slate from "./Slate";
 
 interface StateProps {
   freeLetters: LetterType.Letter[];
   isTargetable: boolean;
+  spells: string;
 }
 interface DispatchProps {
   onMeasure: Effect.Effect<Dimensions.Dimensions>;
@@ -46,7 +47,8 @@ export class App extends React.PureComponent<Props> {
       freeLetters,
       isTargetable,
       onClearSelection,
-      onTargetFreeSpace
+      onTargetFreeSpace,
+      spells
     } = this.props;
     return (
       <div
@@ -64,6 +66,8 @@ export class App extends React.PureComponent<Props> {
             ))}
           </div>
           <Slate />
+
+          <span className="Spells">{spells}</span>
         </div>
       </div>
     );
@@ -93,7 +97,8 @@ export const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
 
 export const mapStateToProps = (state: State): StateProps => ({
   freeLetters: getFreeLetters(state),
-  isTargetable: getValidTargetTypes(state).indexOf("FreeSpace") >= 0
+  isTargetable: getValidTargetTypes(state).indexOf("FreeSpace") >= 0,
+  spells: getSpells(state)
 });
 
 export default connect(
