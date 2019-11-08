@@ -1,3 +1,4 @@
+export type Effect0 = () => void;
 export type Effect<A> = (a: A) => void;
 export type Effect2<A, B> = (a: A, b: B) => void;
 export type Effect3<A, B, C> = (a: A, b: B, c: C) => void;

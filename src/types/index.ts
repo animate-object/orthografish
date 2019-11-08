@@ -6,5 +6,18 @@ import * as Result from "./result";
 import * as Slate from "./slate";
 import * as UUID from "./uuid";
 import * as ArrayUtils from "./arrayUtils";
+import * as Select from "./select";
+import * as Handler from "./handler";
 
-export { Dimensions, Maybe, Effect, Letter, ArrayUtils, Result, Slate, UUID };
+export {
+  ArrayUtils,
+  Dimensions,
+  Effect,
+  Letter,
+  Maybe,
+  Result,
+  Select,
+  Slate,
+  UUID,
+  Handler
+};

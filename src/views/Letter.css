@@ -11,8 +11,18 @@
   text-shadow: 0 0 1px #444444;
   cursor: pointer;
   transition: opacity 500ms;
-
+  margin: 2px;
   font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.Letter.Selected {
+  border: 2px solid blue;
+  margin: 0;
+}
+
+.Letter.Targetable {
+  border: 2px solid red;
+  margin: 0;
 }
 
 .Letter:hover {

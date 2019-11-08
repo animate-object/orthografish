@@ -17,4 +17,9 @@
   width: calc(100% - 1rem);
   background-color: #ddefef;
   display: flex;
+  flex-direction: column;
+}
+
+.FreeSpace {
+  display: flex;
 }

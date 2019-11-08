@@ -1,44 +1,35 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Word App (name Tbd)
 
-## Available Scripts
+A vocabulary building game for the browser. Designed to run against word lambda backend (https://github.com/animate-object/word_api_lambda)
 
-In the project directory, you can run:
+## Done
 
-### `yarn start`
+- Letters auto size to fit screen
+- Valid letters are drawn from a 'bag' on page load
+- Types for managing letters and a slate
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## IN PROGRESS
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## TODO
 
-### `yarn test`
+### Milestone 1: Playable Point and Click Game
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- User can place tiles in slate by selecting tile and clicking in slate
+- User can clear slate
+- User sees a preview of the word they are spelling
+- App calls API to retrieve list of all valid words
+- When user forms a valid word, game state updates
+- Something reasonable happens when a user spells all words (congratulations + new game button?)
+- App provides a 'give up' button, and displays all words the user did not spell
 
-### `yarn build`
+### Milestone 2: Drag and Drop
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- All the above functionality, but with a drag and drop interface
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### Milestone 3: Polish
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Extra parameters
+  - Word must contain specified letters
+    - Something like, 'all 5 letter words containing q' (might have feasibility implications)
+  - Specify word length
+- View Definition option (looking to integrate with wiktionary api)

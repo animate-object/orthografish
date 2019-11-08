@@ -1,20 +1,28 @@
 import React from "react";
 import "./App.css";
-import { Dimensions, Maybe, Effect } from "../types";
+import { Dimensions, Maybe, Effect, Select } from "../types";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { setContainerDimensions } from "../actions";
-import Letter from "./Letter";
+import {
+  setContainerDimensions,
+  clearSelection,
+  chooseTarget
+} from "../actions";
 import { Letter as LetterType } from "../types";
 import * as _ from "lodash";
 import { State } from "../state";
-import { getFreeLetters } from "../selectors";
+import { getFreeLetters, getValidTargetTypes } from "../selectors";
+import FreeLetter from "./FreeLetter";
+import Slate from "./Slate";
 
 interface StateProps {
   freeLetters: LetterType.Letter[];
+  isTargetable: boolean;
 }
 interface DispatchProps {
   onMeasure: Effect.Effect<Dimensions.Dimensions>;
+  onClearSelection: Effect.Effect0;
+  onTargetFreeSpace: Effect.Effect0;
 }
 
 type Props = StateProps & DispatchProps;
@@ -34,15 +42,28 @@ export class App extends React.PureComponent<Props> {
   }
 
   render = () => {
-    const { freeLetters } = this.props;
+    const {
+      freeLetters,
+      isTargetable,
+      onClearSelection,
+      onTargetFreeSpace
+    } = this.props;
     return (
-      <div className="App">
+      <div
+        className="App"
+        onClick={() =>
+          isTargetable ? onTargetFreeSpace() : onClearSelection()
+        }
+      >
         <div className="Container" ref={this.primaryContainerRef}>
-          {freeLetters.map(l => (
-            <React.Fragment key={l.id}>
-              <Letter letter={l} />
-            </React.Fragment>
-          ))}
+          <div className="FreeSpace">
+            {freeLetters.map(l => (
+              <React.Fragment key={l.id}>
+                <FreeLetter letter={l} />
+              </React.Fragment>
+            ))}
+          </div>
+          <Slate />
         </div>
       </div>
     );
@@ -62,13 +83,17 @@ export class App extends React.PureComponent<Props> {
   private queueMeasure = _.debounce(this.measure, 100);
 }
 
-export const mapDispatchToProps = (dispatch: Dispatch) => ({
+export const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   onMeasure: (dimensions: Dimensions.Dimensions) =>
-    dispatch(setContainerDimensions(dimensions))
+    dispatch(setContainerDimensions(dimensions)),
+  onClearSelection: () => dispatch(clearSelection()),
+  onTargetFreeSpace: () =>
+    dispatch(chooseTarget(Select.target("FreeSpace", "free_space")))
 });
 
 export const mapStateToProps = (state: State): StateProps => ({
-  freeLetters: getFreeLetters(state)
+  freeLetters: getFreeLetters(state),
+  isTargetable: getValidTargetTypes(state).indexOf("FreeSpace") >= 0
 });
 
 export default connect(

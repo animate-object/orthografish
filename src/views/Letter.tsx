@@ -1,13 +1,17 @@
-import { Dimensions } from "../types";
+import { Dimensions, Effect, Maybe, Handler } from "../types";
 import * as React from "react";
 import { Letter as LetterType } from "../types";
 import { connect } from "react-redux";
 import { State } from "../state";
 import { getLetterDimensions } from "../selectors";
 import "./Letter.css";
+import classNames from "classnames";
 
 interface OwnProps {
   letter: LetterType.Letter;
+  isSelected?: boolean;
+  isTargetable?: boolean;
+  onClick?: Effect.Effect0;
 }
 
 interface StateProps {
@@ -16,10 +20,23 @@ interface StateProps {
 
 type Props = OwnProps & StateProps;
 
-const Letter = ({ dimensions, letter }: Props): JSX.Element => (
-  <div className="Letter" style={{ ...dimensions }}>
+const Letter = ({
+  dimensions,
+  isSelected,
+  isTargetable,
+  letter,
+  onClick
+}: Props): JSX.Element => (
+  <div
+    className={classNames("Letter", {
+      Selected: isSelected,
+      Targetable: isTargetable
+    })}
+    style={{ ...dimensions }}
+    onClick={Handler.noPropagate(() => onClick && onClick())}
+  >
     <span style={{ fontSize: `${0.8 * dimensions.width}px` }}>
-      {letter.alpha}
+      {letter && letter.alpha}
     </span>
   </div>
 );

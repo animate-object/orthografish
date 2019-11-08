@@ -1,0 +1,14 @@
+.Slot {
+  box-shadow: inset 0 0 3px #444444;
+  margin: 2px;
+}
+
+.Slot.Selected {
+  border: 2px solid blue;
+  margin: 0;
+}
+
+.Slot.Targetable {
+  border: 2px solid red;
+  margin: 0;
+}
