@@ -9,7 +9,8 @@ import {
   chooseTarget,
   giveUp,
   newGame,
-  showSpelled
+  showSpelled,
+  showDefinition
 } from "../actions";
 import { Letter as LetterType } from "../types";
 import * as _ from "lodash";
@@ -31,6 +32,7 @@ import classNames from "classnames";
 import EndGameModal from "./EndGameModal";
 import { Button } from "./Button";
 import SpelledModal from "./SpelledModal";
+import ProbablyLegalDefinitionModal from "./DefinitionModal";
 
 interface StateProps {
   freeLetters: LetterType.Letter[];
@@ -50,6 +52,7 @@ interface DispatchProps {
   onGiveUp: Effect.Effect0;
   onNewGame: Effect.Effect0;
   onShowSpelled: Effect.Effect0;
+  onShowDefinition: Effect.Effect0;
 }
 
 type Props = StateProps & DispatchProps;
@@ -81,7 +84,8 @@ export class App extends React.PureComponent<Props> {
       onClearSelection,
       onTargetFreeSpace,
       onGiveUp,
-      onShowSpelled
+      onShowSpelled,
+      onShowDefinition
     } = this.props;
     return (
       showApp && (
@@ -93,6 +97,7 @@ export class App extends React.PureComponent<Props> {
         >
           <EndGameModal />
           <SpelledModal />
+          <ProbablyLegalDefinitionModal />
           <div className="Container" ref={this.primaryContainerRef}>
             <div className="FreeSpace">
               {freeLetters.map(l => (
@@ -129,6 +134,15 @@ export class App extends React.PureComponent<Props> {
             >
               Spelled
             </Button>
+            {spellState !== "Nothing" && (
+              <Button
+                className="ShowDefinition"
+                onClick={onShowDefinition}
+                buttonType="Secondary"
+              >
+                Show Definition
+              </Button>
+            )}
           </div>
         </div>
       )
@@ -157,7 +171,8 @@ export const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     dispatch(chooseTarget(Select.target("FreeSpace", "free_space"))),
   onGiveUp: () => dispatch(giveUp()),
   onNewGame: () => dispatch(newGame()),
-  onShowSpelled: () => dispatch(showSpelled(true))
+  onShowSpelled: () => dispatch(showSpelled(true)),
+  onShowDefinition: () => dispatch(showDefinition(true))
 });
 
 export const mapStateToProps = (state: State): StateProps => ({

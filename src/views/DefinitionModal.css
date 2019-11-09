@@ -1,0 +1,9 @@
+.Close {
+  position: fixed;
+  bottom: 1rem;
+}
+
+.GuestContent {
+  width: 100%;
+  height: 90%;
+}

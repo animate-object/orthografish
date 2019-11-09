@@ -41,12 +41,12 @@ export const FreeLetter = ({
   );
 };
 
-export const mapStateToProps = (state: State, _: OwnProps): StateProps => ({
+const mapStateToProps = (state: State, _: OwnProps): StateProps => ({
   selected: getSelectedId(state),
   validTargetTypes: getValidTargetTypes(state)
 });
 
-export const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   onSelect: id => dispatch(select(Select.selection("FreeLetter", id))),
   onTarget: id => dispatch(chooseTarget(Select.target("FreeLetter", id)))
 });

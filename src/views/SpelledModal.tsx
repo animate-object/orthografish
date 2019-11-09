@@ -34,7 +34,7 @@ export const SpelledModal = ({
       </div>
     )}
     {spelled.map(word => (
-      <div>{word}</div>
+      <div key={word}>{word}</div>
     ))}
     {spelled.length <= 0 && (
       <>
@@ -47,13 +47,13 @@ export const SpelledModal = ({
   </Modal>
 );
 
-export const mapStateToProps = (state: State): StateProps => ({
+const mapStateToProps = (state: State): StateProps => ({
   spelled: getSpelled(state),
   visible: getShowSpelled(state),
   totalCount: getTotalWords(state)
 });
 
-export const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   onClose: () => dispatch(showSpelled(false))
 });
 

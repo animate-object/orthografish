@@ -18,6 +18,7 @@ export interface State {
   fetchState: FetchState;
   hasGivenUp: boolean;
   showSpelled: boolean;
+  showDefinition: boolean;
 }
 
 export const create = (init: Partial<State> = {}): State => {
@@ -34,6 +35,7 @@ export const create = (init: Partial<State> = {}): State => {
     fetchState: "Uninitialized",
     hasGivenUp: false,
     showSpelled: false,
+    showDefinition: false,
     ...init
   };
 };

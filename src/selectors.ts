@@ -154,3 +154,8 @@ export const getShouldShowApp = createSelector(
   getState,
   state => state.fetchState !== "Uninitialized"
 );
+
+export const getShouldShowDefinition = createSelector(
+  getState,
+  state => state.showDefinition
+);

@@ -26,6 +26,14 @@ export const reducer = (state: State = create(), action: Action): State => {
       return create({ containerDimensions: state.containerDimensions });
     case ActionTypes.SHOW_SPELLED:
       return { ...state, showSpelled: action.show };
+    case ActionTypes.SHOW_DEFINITION:
+      return {
+        ...state,
+        showDefinition:
+          state.spellState === "New" || state.spellState === "Previous"
+            ? action.show
+            : false
+      };
     default:
       return state;
   }

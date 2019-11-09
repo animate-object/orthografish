@@ -34,7 +34,7 @@ export const EndGameModal = ({
   gaveUp
 }: Props): JSX.Element => (
   <Modal visible={gaveUp || !anyUnspelled}>
-    <h1>You {anyUnspelled ? "gave up!" : "Won!"}</h1>
+    <div className="Title">You {anyUnspelled ? "gave up!" : "Won!"}</div>
     <div className="Words">
       {words.map(([word, spelled]: WordAndSpelled) => (
         <div

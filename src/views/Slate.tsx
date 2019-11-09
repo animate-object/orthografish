@@ -61,14 +61,14 @@ export const Slate = ({
   );
 };
 
-export const mapStateToProps = (state: State): StateProps => ({
+const mapStateToProps = (state: State): StateProps => ({
   slate: getSlate(state),
   dimensions: getLetterDimensions(state),
   selected: getSelectedId(state),
   validTargetTypes: getValidTargetTypes(state)
 });
 
-export const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   onTargetSlot: id => dispatch(chooseTarget(Select.target("SlateSlot", id))),
   onSelectSlot: id => dispatch(select(Select.selection("SlateSlot", id))),
   onClearSelection: () => dispatch(clearSelection())
