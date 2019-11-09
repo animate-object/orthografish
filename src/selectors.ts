@@ -1,17 +1,35 @@
 import { State } from "./state";
 import { createSelector } from "reselect";
-import { Dimensions, Select, Maybe } from "./types";
+import { Dimensions, Select, Maybe, Letter } from "./types";
+import { BAG } from "./types/letter";
 
 const getState = (state: State) => state;
 
-export const getLetterDimensions = createSelector(
+export const getLettersOnTheBoard = createSelector(
   getState,
-  state => Dimensions.square(state.containerDimensions.width / 8)
+  state => BAG.length - state.bag.length
+);
+
+export const getContainerDimensions = createSelector(
+  getState,
+  state => state.containerDimensions
+);
+
+export const getLetterDimensions = createSelector(
+  getContainerDimensions,
+  getLettersOnTheBoard,
+  (containerDimensions, letterCount) =>
+    Dimensions.square(containerDimensions.width / (letterCount + 1))
 );
 
 export const getFreeLetters = createSelector(
   getState,
   state => state.freeLetters
+);
+
+export const getSpellState = createSelector(
+  getState,
+  state => state.spellState
 );
 
 export const getSlate = createSelector(
@@ -27,6 +45,43 @@ export const getSelected = createSelector(
 export const getSelectedId = createSelector(
   getSelected,
   selected => (selected ? selected.id : undefined)
+);
+
+export const getSpelled = createSelector(
+  getState,
+  state => state.spelled
+);
+
+export const getUnspelled = createSelector(
+  getState,
+  state => state.unspelled
+);
+
+export const getSpelledCount = createSelector(
+  getState,
+  state => state.spelled.length
+);
+
+export const getUnspelledCount = createSelector(
+  getUnspelled,
+  unspelled => unspelled.length
+);
+
+export const getCurrentWord = createSelector(
+  getState,
+  state => state.spells
+);
+
+export const getCurrentWordIsValid = createSelector(
+  getCurrentWord,
+  getSpelled,
+  (word, spelled) => spelled.indexOf(word) >= 0
+);
+
+export const getCurrentWordScore = createSelector(
+  getCurrentWord,
+  getCurrentWordIsValid,
+  (word, isValid) => (isValid ? Letter.scoreWord(word) : undefined)
 );
 
 export const getValidTargetTypes = createSelector(

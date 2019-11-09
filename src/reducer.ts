@@ -1,8 +1,6 @@
-import { Action, ActionTypes, select } from "./actions";
+import { Action, ActionTypes } from "./actions";
 import { State, create } from "./state";
 import { Select, UUID, Slate, Result, Maybe } from "./types";
-import { slotId } from "./types/slate";
-import { stat } from "fs";
 
 export const reducer = (state: State = create(), action: Action): State => {
   switch (action.type) {
@@ -12,9 +10,16 @@ export const reducer = (state: State = create(), action: Action): State => {
       return { ...state, selected: action.selection };
     case ActionTypes.CHOOSE_TARGET:
       const updated = chooseTarget(state, action.target.type, action.target.id);
-      return { ...updated, spells: Slate.spells(updated.slate) };
+      const spells = { ...updated, spells: Slate.spells(updated.slate) };
+      return updateSpelled(spells);
     case ActionTypes.CLEAR_SELECTION:
       return { ...state, selected: undefined };
+    case ActionTypes.FETCH_WORDS:
+      return { ...state, fetchState: "Pending" };
+    case ActionTypes.FETCH_WORDS_SUCCESS:
+      return { ...state, unspelled: action.words, spelled: [] };
+    case ActionTypes.FETCH_WORDS_FAILED:
+      return { ...state, fetchState: "Errored" };
     default:
       return state;
   }
@@ -24,6 +29,24 @@ const clearSelection = (state: State): State => ({
   ...state,
   selected: undefined
 });
+
+const updateSpelled = (state: State): State => {
+  const unspelledIdx = state.unspelled.indexOf(state.spells);
+  const spelledIdx = state.spelled.indexOf(state.spells);
+
+  if (unspelledIdx >= 0 && spelledIdx < 0) {
+    return {
+      ...state,
+      unspelled: state.unspelled.filter(word => word !== state.spells),
+      spelled: [...state.spelled, state.spells],
+      spellState: "New"
+    };
+  } else if (spelledIdx >= 0) {
+    return { ...state, spellState: "Previous" };
+  } else {
+    return { ...state, spellState: "Nothing" };
+  }
+};
 
 const chooseTarget = (
   state: State,

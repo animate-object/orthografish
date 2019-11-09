@@ -28,4 +28,21 @@
 
 .Spells {
   font-size: 3rem;
+  height: 4rem;
+}
+
+.NewScore {
+  color: green;
+}
+
+.Score {
+  padding-left: 1rem;
+  font-weight: bolder;
+  font-size: 1.5rem;
+  color: black;
+}
+
+.PreviouslySpelled {
+  padding-left: 1rem;
+  font-size: 1rem;
 }

@@ -70,8 +70,18 @@ const SCORES: Record<Alpha, number> = {
   z: 10
 };
 
-export const score = (letter: Letter): number => {
-  return SCORES[letter.alpha];
+export const score = (alpha: Alpha): number => {
+  return SCORES[alpha];
+};
+
+export const scoreWord = (letters: string): number => {
+  return letters
+    .split("")
+    .map(l => l as Alpha)
+    .reduce((acc: number, l: Alpha) => {
+      const val = SCORES[l];
+      return acc + val;
+    }, 0);
 };
 
 const COUNTS: Record<Alpha, number> = {

@@ -1,8 +1,9 @@
 import { Dimensions, Letter, Select } from "./types";
 import { Slate } from "./types";
 
-export const N_LETTERS = 7;
+export const N_LETTERS = 5;
 export type FetchState = "Uninitialized" | "Pending" | "Fetched" | "Errored";
+export type SpellState = "New" | "Previous" | "Nothing";
 
 export interface State {
   containerDimensions: Dimensions.Dimensions;
@@ -13,6 +14,7 @@ export interface State {
   spells: string;
   unspelled: string[];
   spelled: string[];
+  spellState: SpellState;
   fetchState: FetchState;
 }
 
@@ -27,6 +29,7 @@ export const create = (init: Partial<State> = {}): State => {
     spells: "",
     unspelled: [],
     spelled: [],
+    spellState: "Nothing",
     fetchState: "Uninitialized"
   };
 };
