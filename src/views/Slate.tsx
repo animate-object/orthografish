@@ -9,7 +9,7 @@ import {
   getSelectedId,
   getValidTargetTypes
 } from "../selectors";
-import { chooseTarget, select } from "../actions";
+import { chooseTarget, select, clearSelection } from "../actions";
 import { Slot } from "./Slot";
 import "./Slate.css";
 
@@ -23,6 +23,7 @@ interface StateProps {
 interface DispatchProps {
   onTargetSlot: Effect.Effect<UUID.UUID>;
   onSelectSlot: Effect.Effect<UUID.UUID>;
+  onClearSelection: Effect.Effect0;
 }
 
 type Props = StateProps & DispatchProps;
@@ -32,7 +33,8 @@ export const Slate = ({
   selected,
   validTargetTypes,
   onTargetSlot,
-  onSelectSlot
+  onSelectSlot,
+  onClearSelection
 }: Props): JSX.Element => {
   return (
     <div className="Slate">
@@ -48,6 +50,7 @@ export const Slate = ({
               letter={l}
               isSelected={isSelected}
               isTargetable={isTargetable}
+              onDeselect={() => onClearSelection()}
               onSelectSlot={() => onSelectSlot(slotId)}
               onTargetSlot={() => onTargetSlot(slotId)}
             />
@@ -67,7 +70,8 @@ export const mapStateToProps = (state: State): StateProps => ({
 
 export const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   onTargetSlot: id => dispatch(chooseTarget(Select.target("SlateSlot", id))),
-  onSelectSlot: id => dispatch(select(Select.selection("SlateSlot", id)))
+  onSelectSlot: id => dispatch(select(Select.selection("SlateSlot", id))),
+  onClearSelection: () => dispatch(clearSelection())
 });
 
 export default connect(

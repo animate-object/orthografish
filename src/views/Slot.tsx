@@ -1,5 +1,5 @@
 import React from "react";
-import { Letter as LetterType, Maybe, Effect, Handler } from "../types";
+import { Letter as LetterType, Maybe, Effect } from "../types";
 import Letter from "./Letter";
 import classNames from "classnames";
 import EmptySlot from "./EmptySlot";
@@ -14,6 +14,7 @@ interface StateProps {
 interface DispatchProps {
   onTargetSlot: Effect.Effect0;
   onSelectSlot: Effect.Effect0;
+  onDeselect: Effect.Effect0;
 }
 
 type Props = StateProps & DispatchProps;
@@ -23,15 +24,21 @@ export const Slot = ({
   isTargetable,
   onTargetSlot,
   onSelectSlot,
+  onDeselect,
   letter
 }: Props): JSX.Element => {
   const handleClick = () =>
-    !isSelected && isTargetable ? onTargetSlot() : onSelectSlot();
+    !isSelected && isTargetable
+      ? onTargetSlot()
+      : isSelected
+      ? onDeselect()
+      : onSelectSlot();
   return (
     <div
       className={classNames("Slot", {
         Selected: isSelected,
-        Targetable: isTargetable
+        Targetable: isTargetable,
+        Occupied: !!letter
       })}
     >
       {letter ? (

@@ -20,6 +20,10 @@ export const reducer = (state: State = create(), action: Action): State => {
       return { ...state, unspelled: action.words, spelled: [] };
     case ActionTypes.FETCH_WORDS_FAILED:
       return { ...state, fetchState: "Errored" };
+    case ActionTypes.GIVE_UP:
+      return { ...state, hasGivenUp: true };
+    case ActionTypes.NEW_GAME:
+      return create({ containerDimensions: state.containerDimensions });
     default:
       return state;
   }

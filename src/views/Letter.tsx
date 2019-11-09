@@ -1,4 +1,4 @@
-import { Dimensions, Effect, Maybe, Handler } from "../types";
+import { Dimensions, Effect, Handler } from "../types";
 import * as React from "react";
 import { Letter as LetterType } from "../types";
 import { connect } from "react-redux";

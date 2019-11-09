@@ -16,12 +16,12 @@ export interface State {
   spelled: string[];
   spellState: SpellState;
   fetchState: FetchState;
+  hasGivenUp: boolean;
 }
 
 export const create = (init: Partial<State> = {}): State => {
   const { left, drawn } = Letter.draw(N_LETTERS);
   return {
-    ...init,
     containerDimensions: Dimensions.create(0, 0),
     slate: Slate.create(N_LETTERS),
     freeLetters: drawn,
@@ -30,6 +30,8 @@ export const create = (init: Partial<State> = {}): State => {
     unspelled: [],
     spelled: [],
     spellState: "Nothing",
-    fetchState: "Uninitialized"
+    fetchState: "Uninitialized",
+    hasGivenUp: false,
+    ...init
   };
 };

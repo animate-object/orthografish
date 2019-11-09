@@ -1,6 +1,6 @@
 import { State } from "./state";
 import { createSelector } from "reselect";
-import { Dimensions, Select, Maybe, Letter } from "./types";
+import { Dimensions, Select, Letter } from "./types";
 import { BAG } from "./types/letter";
 
 const getState = (state: State) => state;
@@ -103,4 +103,9 @@ export const getValidTargetTypes = createSelector(
 export const getSpells = createSelector(
   getState,
   state => state.spells
+);
+
+export const getGaveUp = createSelector(
+  getState,
+  state => state.hasGivenUp
 );

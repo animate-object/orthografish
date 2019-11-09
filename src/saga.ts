@@ -1,11 +1,4 @@
-import {
-  all,
-  takeEvery,
-  select,
-  put,
-  call,
-  fork
-} from "@redux-saga/core/effects";
+import { takeEvery, select, put, call, fork } from "@redux-saga/core/effects";
 import {
   ActionTypes,
   FetchWords,
@@ -19,11 +12,9 @@ import axios from "axios";
 const URL = "https://4upb1jruoc.execute-api.us-east-1.amazonaws.com/prod/words";
 
 export function* root() {
-  console.log("hello");
   yield fork(watchFetchWords);
-  const freeLetters = yield select(getFreeLetters);
-  console.log("hello2");
-  yield put(fetchWords(freeLetters));
+  yield fork(watchNewGame);
+  yield initializeGame();
 }
 
 export function* fetchWordsForLetters({ letters }: FetchWords) {
@@ -39,6 +30,15 @@ export function* fetchWordsForLetters({ letters }: FetchWords) {
   }
 }
 
+export function* initializeGame() {
+  const freeLetters = yield select(getFreeLetters);
+  yield put(fetchWords(freeLetters));
+}
+
 export function* watchFetchWords() {
   yield takeEvery(ActionTypes.FETCH_WORDS, fetchWordsForLetters);
+}
+
+export function* watchNewGame() {
+  yield takeEvery(ActionTypes.NEW_GAME, initializeGame);
 }

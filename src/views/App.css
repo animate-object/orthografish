@@ -46,3 +46,10 @@
   padding-left: 1rem;
   font-size: 1rem;
 }
+
+.GiveUp {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1rem;
+}

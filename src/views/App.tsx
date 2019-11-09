@@ -6,7 +6,9 @@ import { Dispatch } from "redux";
 import {
   setContainerDimensions,
   clearSelection,
-  chooseTarget
+  chooseTarget,
+  giveUp,
+  newGame
 } from "../actions";
 import { Letter as LetterType } from "../types";
 import * as _ from "lodash";
@@ -15,30 +17,36 @@ import {
   getFreeLetters,
   getValidTargetTypes,
   getSpells,
-  getSpelledCount,
-  getUnspelledCount,
   getCurrentWordIsValid,
   getCurrentWordScore,
-  getSpellState
+  getSpellState,
+  getGaveUp,
+  getUnspelled,
+  getSpelled
 } from "../selectors";
 import FreeLetter from "./FreeLetter";
 import Slate from "./Slate";
 import classNames from "classnames";
+import { EndGameModal } from "./EndGameModal";
+import { Button } from "./Button";
 
 interface StateProps {
   freeLetters: LetterType.Letter[];
   isTargetable: boolean;
   spells: string;
-  spelledCount: number;
-  unspelledCount: number;
+  spelled: string[];
+  unspelled: string[];
   wordIsValid: boolean;
   wordScore: Maybe.Maybe<number>;
   spellState: SpellState;
+  gaveUp: boolean;
 }
 interface DispatchProps {
   onMeasure: Effect.Effect<Dimensions.Dimensions>;
   onClearSelection: Effect.Effect0;
   onTargetFreeSpace: Effect.Effect0;
+  onGiveUp: Effect.Effect0;
+  onNewGame: Effect.Effect0;
 }
 
 type Props = StateProps & DispatchProps;
@@ -61,13 +69,18 @@ export class App extends React.PureComponent<Props> {
     const {
       freeLetters,
       isTargetable,
-      onClearSelection,
-      onTargetFreeSpace,
       spells,
-      unspelledCount,
+      spelled,
+      unspelled,
       wordIsValid,
       wordScore,
-      spellState
+      gaveUp,
+      spellState,
+
+      onClearSelection,
+      onTargetFreeSpace,
+      onGiveUp,
+      onNewGame
     } = this.props;
     return (
       <div
@@ -76,6 +89,13 @@ export class App extends React.PureComponent<Props> {
           isTargetable ? onTargetFreeSpace() : onClearSelection()
         }
       >
+        <EndGameModal
+          gaveUp={gaveUp}
+          visible={gaveUp || unspelled.length <= 0}
+          spelled={spelled}
+          unspelled={unspelled}
+          onNewGame={onNewGame}
+        />
         <div className="Container" ref={this.primaryContainerRef}>
           <div className="FreeSpace">
             {freeLetters.map(l => (
@@ -101,7 +121,10 @@ export class App extends React.PureComponent<Props> {
                 </span>
               ))}
           </span>
-          <span>You have {unspelledCount} words left to spell.</span>
+          <span>You have {unspelled.length} words left to spell.</span>
+          <Button className="GiveUp" onClick={onGiveUp}>
+            Give Up
+          </Button>
         </div>
       </div>
     );
@@ -126,18 +149,21 @@ export const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     dispatch(setContainerDimensions(dimensions)),
   onClearSelection: () => dispatch(clearSelection()),
   onTargetFreeSpace: () =>
-    dispatch(chooseTarget(Select.target("FreeSpace", "free_space")))
+    dispatch(chooseTarget(Select.target("FreeSpace", "free_space"))),
+  onGiveUp: () => dispatch(giveUp()),
+  onNewGame: () => dispatch(newGame())
 });
 
 export const mapStateToProps = (state: State): StateProps => ({
   freeLetters: getFreeLetters(state),
   isTargetable: getValidTargetTypes(state).indexOf("FreeSpace") >= 0,
   spells: getSpells(state),
-  spelledCount: getSpelledCount(state),
-  unspelledCount: getUnspelledCount(state),
+  spelled: getSpelled(state),
+  unspelled: getUnspelled(state),
   wordIsValid: getCurrentWordIsValid(state),
   wordScore: getCurrentWordScore(state),
-  spellState: getSpellState(state)
+  spellState: getSpellState(state),
+  gaveUp: getGaveUp(state)
 });
 
 export default connect(

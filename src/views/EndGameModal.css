@@ -1,0 +1,11 @@
+.Spelled {
+  color: green;
+}
+
+.Unspelled {
+  color: red;
+}
+
+.Words:not(:last-child) {
+  padding-bottom: 1rem;
+}
