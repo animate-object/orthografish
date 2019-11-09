@@ -3,30 +3,47 @@ import "./EndGameModal.css";
 import { Modal } from "./Modal";
 import { Button } from "./Button";
 import { Effect } from "../types";
+import { newGame } from "../actions";
+import { Dispatch } from "redux";
+import { State } from "../state";
+import classNames from "classnames";
+import {
+  getGaveUp,
+  WordAndSpelled,
+  getEndGameWords,
+  getUnspelledCount
+} from "../selectors";
+import { connect } from "react-redux";
 
-interface Props {
-  spelled: string[];
-  unspelled: string[];
+interface StateProps {
+  words: Array<WordAndSpelled>;
   gaveUp: boolean;
-  visible: boolean;
+  anyUnspelled: boolean;
+}
+
+interface DispatchProps {
   onNewGame: Effect.Effect0;
 }
 
+type Props = DispatchProps & StateProps;
+
 export const EndGameModal = ({
-  unspelled,
-  spelled,
-  visible,
-  onNewGame
+  words,
+  onNewGame,
+  anyUnspelled,
+  gaveUp
 }: Props): JSX.Element => (
-  <Modal visible={visible}>
+  <Modal visible={gaveUp || !anyUnspelled}>
+    <h1>You {anyUnspelled ? "gave up!" : "Won!"}</h1>
     <div className="Words">
-      {unspelled.map(word => (
-        <div key={word} className="Unspelled">
-          {word}
-        </div>
-      ))}
-      {spelled.map(word => (
-        <div key={word} className="Spelled">
+      {words.map(([word, spelled]: WordAndSpelled) => (
+        <div
+          key={word}
+          className={classNames({
+            Unspelled: !spelled,
+            Spelled: spelled
+          })}
+        >
           {word}
         </div>
       ))}
@@ -37,3 +54,18 @@ export const EndGameModal = ({
     </Button>
   </Modal>
 );
+
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
+  onNewGame: () => dispatch(newGame())
+});
+
+const mapStateToProps = (state: State): StateProps => ({
+  gaveUp: getGaveUp(state),
+  words: getEndGameWords(state),
+  anyUnspelled: getUnspelledCount(state) > 0
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EndGameModal);

@@ -24,6 +24,8 @@ export const reducer = (state: State = create(), action: Action): State => {
       return { ...state, hasGivenUp: true };
     case ActionTypes.NEW_GAME:
       return create({ containerDimensions: state.containerDimensions });
+    case ActionTypes.SHOW_SPELLED:
+      return { ...state, showSpelled: action.show };
     default:
       return state;
   }

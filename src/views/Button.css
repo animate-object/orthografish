@@ -5,3 +5,8 @@
   box-shadow: 0px 1px 3px 0px #444444;
   border-radius: 4px;
 }
+
+.Button.Secondary {
+  color: black;
+  background-color: white;
+}

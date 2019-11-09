@@ -9,7 +9,8 @@ export enum ActionTypes {
   FETCH_WORDS_SUCCESS = "FETCH_WORDS_SUCCESS",
   FETCH_WORDS_FAILED = "FETCH_WORDS_FAILED",
   GIVE_UP = "GIVE_UP",
-  NEW_GAME = "NEW_GAME"
+  NEW_GAME = "NEW_GAME",
+  SHOW_SPELLED = "SHOW_SPELLED"
 }
 
 export type Action =
@@ -21,7 +22,8 @@ export type Action =
   | FetchWordsSuccess
   | FetchWordsFailed
   | GiveUp
-  | NewGame;
+  | NewGame
+  | ShowSpelled;
 
 export interface SetContainerDimensions {
   type: ActionTypes.SET_CONTAINER_DIMENSIONS;
@@ -64,6 +66,11 @@ export interface NewGame {
   type: ActionTypes.NEW_GAME;
 }
 
+export interface ShowSpelled {
+  type: ActionTypes.SHOW_SPELLED;
+  show: boolean;
+}
+
 export const setContainerDimensions = (
   dimensions: Dimensions.Dimensions
 ): SetContainerDimensions => ({
@@ -100,3 +107,8 @@ export const fetchWordsFailed = (): FetchWordsFailed => ({
 export const giveUp = (): GiveUp => ({ type: ActionTypes.GIVE_UP });
 
 export const newGame = (): NewGame => ({ type: ActionTypes.NEW_GAME });
+
+export const showSpelled = (show: boolean): ShowSpelled => ({
+  type: ActionTypes.SHOW_SPELLED,
+  show
+});

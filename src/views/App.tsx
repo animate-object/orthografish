@@ -8,7 +8,8 @@ import {
   clearSelection,
   chooseTarget,
   giveUp,
-  newGame
+  newGame,
+  showSpelled
 } from "../actions";
 import { Letter as LetterType } from "../types";
 import * as _ from "lodash";
@@ -20,15 +21,16 @@ import {
   getCurrentWordIsValid,
   getCurrentWordScore,
   getSpellState,
-  getGaveUp,
   getUnspelled,
-  getSpelled
+  getSpelled,
+  getShouldShowApp
 } from "../selectors";
 import FreeLetter from "./FreeLetter";
 import Slate from "./Slate";
 import classNames from "classnames";
-import { EndGameModal } from "./EndGameModal";
+import EndGameModal from "./EndGameModal";
 import { Button } from "./Button";
+import SpelledModal from "./SpelledModal";
 
 interface StateProps {
   freeLetters: LetterType.Letter[];
@@ -39,7 +41,7 @@ interface StateProps {
   wordIsValid: boolean;
   wordScore: Maybe.Maybe<number>;
   spellState: SpellState;
-  gaveUp: boolean;
+  showApp: boolean;
 }
 interface DispatchProps {
   onMeasure: Effect.Effect<Dimensions.Dimensions>;
@@ -47,6 +49,7 @@ interface DispatchProps {
   onTargetFreeSpace: Effect.Effect0;
   onGiveUp: Effect.Effect0;
   onNewGame: Effect.Effect0;
+  onShowSpelled: Effect.Effect0;
 }
 
 type Props = StateProps & DispatchProps;
@@ -70,63 +73,65 @@ export class App extends React.PureComponent<Props> {
       freeLetters,
       isTargetable,
       spells,
-      spelled,
       unspelled,
       wordIsValid,
       wordScore,
-      gaveUp,
+      showApp,
       spellState,
-
       onClearSelection,
       onTargetFreeSpace,
       onGiveUp,
-      onNewGame
+      onShowSpelled
     } = this.props;
     return (
-      <div
-        className="App"
-        onClick={() =>
-          isTargetable ? onTargetFreeSpace() : onClearSelection()
-        }
-      >
-        <EndGameModal
-          gaveUp={gaveUp}
-          visible={gaveUp || unspelled.length <= 0}
-          spelled={spelled}
-          unspelled={unspelled}
-          onNewGame={onNewGame}
-        />
-        <div className="Container" ref={this.primaryContainerRef}>
-          <div className="FreeSpace">
-            {freeLetters.map(l => (
-              <React.Fragment key={l.id}>
-                <FreeLetter letter={l} />
-              </React.Fragment>
-            ))}
-          </div>
-          <Slate />
-
-          <span
-            className={classNames("Spells", {
-              NewScore: wordIsValid && spellState === "New"
-            })}
-          >
-            {spells}
-            {wordIsValid &&
-              (spellState === "New" ? (
-                <span className="Score">{`${wordScore} points!`}</span>
-              ) : (
-                <span className="PreviouslySpelled">
-                  You already spelled this word.
-                </span>
+      showApp && (
+        <div
+          className="App"
+          onClick={() =>
+            isTargetable ? onTargetFreeSpace() : onClearSelection()
+          }
+        >
+          <EndGameModal />
+          <SpelledModal />
+          <div className="Container" ref={this.primaryContainerRef}>
+            <div className="FreeSpace">
+              {freeLetters.map(l => (
+                <React.Fragment key={l.id}>
+                  <FreeLetter letter={l} />
+                </React.Fragment>
               ))}
-          </span>
-          <span>You have {unspelled.length} words left to spell.</span>
-          <Button className="GiveUp" onClick={onGiveUp}>
-            Give Up
-          </Button>
+            </div>
+            <Slate />
+
+            <span
+              className={classNames("Spells", {
+                NewScore: wordIsValid && spellState === "New"
+              })}
+            >
+              {spells}
+              {wordIsValid &&
+                (spellState === "New" ? (
+                  <span className="Score">{`${wordScore} points!`}</span>
+                ) : (
+                  <span className="PreviouslySpelled">
+                    You already spelled this word.
+                  </span>
+                ))}
+            </span>
+            <span>You have {unspelled.length} words left to spell.</span>
+            <Button className="GiveUp" onClick={onGiveUp}>
+              Give Up
+            </Button>
+            <Button
+              className="ShowSpelled"
+              onClick={onShowSpelled}
+              buttonType="Secondary"
+            >
+              Spelled
+            </Button>
+          </div>
         </div>
-      </div>
+      )
     );
   };
 
@@ -151,7 +156,8 @@ export const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   onTargetFreeSpace: () =>
     dispatch(chooseTarget(Select.target("FreeSpace", "free_space"))),
   onGiveUp: () => dispatch(giveUp()),
-  onNewGame: () => dispatch(newGame())
+  onNewGame: () => dispatch(newGame()),
+  onShowSpelled: () => dispatch(showSpelled(true))
 });
 
 export const mapStateToProps = (state: State): StateProps => ({
@@ -163,7 +169,7 @@ export const mapStateToProps = (state: State): StateProps => ({
   wordIsValid: getCurrentWordIsValid(state),
   wordScore: getCurrentWordScore(state),
   spellState: getSpellState(state),
-  gaveUp: getGaveUp(state)
+  showApp: getShouldShowApp(state)
 });
 
 export default connect(

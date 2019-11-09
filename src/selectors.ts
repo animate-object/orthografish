@@ -1,6 +1,6 @@
 import { State } from "./state";
 import { createSelector } from "reselect";
-import { Dimensions, Select, Letter } from "./types";
+import { Dimensions, Select, Letter, ArrayUtils } from "./types";
 import { BAG } from "./types/letter";
 
 const getState = (state: State) => state;
@@ -108,4 +108,49 @@ export const getSpells = createSelector(
 export const getGaveUp = createSelector(
   getState,
   state => state.hasGivenUp
+);
+
+export type WordAndSpelled = [string, boolean];
+const wordAndSpelled = (word: string, spelled: boolean): WordAndSpelled => [
+  word,
+  spelled
+];
+
+export const getEndGameWords = createSelector(
+  getSpelled,
+  getUnspelled,
+  (spelled: string[], unspelled: string[]): WordAndSpelled[] => {
+    return ArrayUtils.sorted([
+      ...spelled.reduce(
+        (acc: WordAndSpelled[], cur: string) => [
+          ...acc,
+          wordAndSpelled(cur, true)
+        ],
+        []
+      ),
+      ...unspelled.reduce(
+        (acc: WordAndSpelled[], cur: string) => [
+          ...acc,
+          wordAndSpelled(cur, false)
+        ],
+        []
+      )
+    ]);
+  }
+);
+
+export const getShowSpelled = createSelector(
+  getState,
+  state => state.showSpelled
+);
+
+export const getTotalWords = createSelector(
+  getUnspelledCount,
+  getSpelledCount,
+  (spelledCount, unspelledCount) => spelledCount + unspelledCount
+);
+
+export const getShouldShowApp = createSelector(
+  getState,
+  state => state.fetchState !== "Uninitialized"
 );
