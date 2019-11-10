@@ -1,3 +1,5 @@
+import { Maybe } from ".";
+
 export const nOf = <T>(n: number, t: T): Array<T> => new Array(n).fill(t);
 
 export const sorted = <T>(
@@ -8,3 +10,6 @@ export const sorted = <T>(
   sorted.sort(sortFn);
   return sorted;
 };
+
+export const nonNull = <T>(array: Array<Maybe.Maybe<T>>): Array<T> =>
+  array.filter(t => t != null) as Array<T>;

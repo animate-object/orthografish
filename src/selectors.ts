@@ -159,3 +159,8 @@ export const getShouldShowDefinition = createSelector(
   getState,
   state => state.showDefinition
 );
+
+export const getShowClearSlateButton = createSelector(
+  getState,
+  state => state.slate.contents.some(v => v != null)
+);

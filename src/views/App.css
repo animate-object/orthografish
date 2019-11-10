@@ -69,4 +69,11 @@
 .ShowDefinition {
   position: fixed;
   bottom: 1rem;
+  right: 1rem;
+}
+
+.ClearSlate {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
 }

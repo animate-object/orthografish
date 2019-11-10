@@ -5,6 +5,7 @@ export enum ActionTypes {
   SELECT = "SELECT",
   CHOOSE_TARGET = "CHOOSE_TARGET",
   CLEAR_SELECTION = "CLEAR_SELECTION",
+  CLEAR_SLATE = "CLEAR_SLATE",
   FETCH_WORDS = "FETCH_WORDS",
   FETCH_IS_SLOW = "FETCH_IS_SLOW",
   FETCH_WORDS_SUCCESS = "FETCH_WORDS_SUCCESS",
@@ -20,6 +21,7 @@ export type Action =
   | Select
   | ChooseTarget
   | ClearSelection
+  | ClearSlate
   | FetchWords
   | FetchIsSlow
   | FetchWordsSuccess
@@ -46,6 +48,10 @@ export interface ChooseTarget {
 
 export interface ClearSelection {
   type: ActionTypes.CLEAR_SELECTION;
+}
+
+export interface ClearSlate {
+  type: ActionTypes.CLEAR_SLATE;
 }
 
 export interface FetchWords {
@@ -100,6 +106,8 @@ export const chooseTarget = (target: Select.Target): ChooseTarget => ({
   type: ActionTypes.CHOOSE_TARGET,
   target
 });
+
+export const clearSlate = (): ClearSlate => ({ type: ActionTypes.CLEAR_SLATE });
 
 export const clearSelection = () => ({ type: ActionTypes.CLEAR_SELECTION });
 

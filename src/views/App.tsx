@@ -10,7 +10,8 @@ import {
   giveUp,
   newGame,
   showSpelled,
-  showDefinition
+  showDefinition,
+  clearSlate
 } from "../actions";
 import { Letter as LetterType } from "../types";
 import * as _ from "lodash";
@@ -24,7 +25,8 @@ import {
   getSpellState,
   getUnspelled,
   getSpelled,
-  getShouldShowApp
+  getShouldShowApp,
+  getShowClearSlateButton
 } from "../selectors";
 import FreeLetter from "./FreeLetter";
 import Slate from "./Slate";
@@ -45,6 +47,7 @@ interface StateProps {
   wordScore: Maybe.Maybe<number>;
   spellState: SpellState;
   showApp: boolean;
+  showClearSlate: boolean;
 }
 interface DispatchProps {
   onMeasure: Effect.Effect<Dimensions.Dimensions>;
@@ -54,6 +57,7 @@ interface DispatchProps {
   onNewGame: Effect.Effect0;
   onShowSpelled: Effect.Effect0;
   onShowDefinition: Effect.Effect0;
+  onClearSlate: Effect.Effect0;
 }
 
 type Props = StateProps & DispatchProps;
@@ -88,11 +92,13 @@ export class App extends React.PureComponent<Props> {
       wordScore,
       showApp,
       spellState,
+      showClearSlate,
       onClearSelection,
       onTargetFreeSpace,
       onGiveUp,
       onShowSpelled,
-      onShowDefinition
+      onShowDefinition,
+      onClearSlate
     } = this.props;
 
     return (
@@ -152,6 +158,15 @@ export class App extends React.PureComponent<Props> {
                   Show Definition
                 </Button>
               )}
+              {showClearSlate && (
+                <Button
+                  className="ClearSlate"
+                  onClick={onClearSlate}
+                  buttonType="Secondary"
+                >
+                  Clear Slate
+                </Button>
+              )}
             </div>
           </>
         ) : (
@@ -184,7 +199,8 @@ export const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   onGiveUp: () => dispatch(giveUp()),
   onNewGame: () => dispatch(newGame()),
   onShowSpelled: () => dispatch(showSpelled(true)),
-  onShowDefinition: () => dispatch(showDefinition(true))
+  onShowDefinition: () => dispatch(showDefinition(true)),
+  onClearSlate: () => dispatch(clearSlate())
 });
 
 export const mapStateToProps = (state: State): StateProps => ({
@@ -196,7 +212,8 @@ export const mapStateToProps = (state: State): StateProps => ({
   wordIsValid: getCurrentWordIsValid(state),
   wordScore: getCurrentWordScore(state),
   spellState: getSpellState(state),
-  showApp: getShouldShowApp(state)
+  showApp: getShouldShowApp(state),
+  showClearSlate: getShowClearSlateButton(state)
 });
 
 export default connect(

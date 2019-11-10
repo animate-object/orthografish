@@ -1,6 +1,6 @@
 import { Action, ActionTypes } from "./actions";
-import { State, create } from "./state";
-import { Select, UUID, Slate, Result, Maybe } from "./types";
+import { State, create, N_LETTERS } from "./state";
+import { Select, UUID, Slate, Result, Maybe, ArrayUtils } from "./types";
 
 export const reducer = (state: State = create(), action: Action): State => {
   console.log(action);
@@ -15,6 +15,17 @@ export const reducer = (state: State = create(), action: Action): State => {
       return updateSpelled(spells);
     case ActionTypes.CLEAR_SELECTION:
       return { ...state, selected: undefined };
+    case ActionTypes.CLEAR_SLATE:
+      const cleared = {
+        ...state,
+        freeLetters: [
+          ...state.freeLetters,
+          ...ArrayUtils.nonNull(state.slate.contents)
+        ],
+        slate: Slate.create(N_LETTERS),
+        spells: ""
+      };
+      return updateSpelled(cleared);
     case ActionTypes.FETCH_WORDS:
       return { ...state, fetchState: "Pending" };
     case ActionTypes.FETCH_IS_SLOW:
