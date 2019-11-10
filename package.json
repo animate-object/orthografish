@@ -32,7 +32,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "serve": "httpserver build/"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -49,5 +50,8 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "/wordlr"
+  "homepage": "https://orthogra.fish",
+  "devDependencies": {
+    "httpserver": "^0.3.0"
+  }
 }
