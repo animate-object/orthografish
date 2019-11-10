@@ -28,13 +28,16 @@ export function* root() {
 
 export function* fetchWordsForLetters({ letters }: FetchWords) {
   const slowLoadTask = yield fork(slowLoadFeedback);
-
+  let words = [];
   try {
-    const response = yield call(axios.post, URL, {
-      letters
-    });
+    while (words.length <= 0) {
+      const response = yield call(axios.post, URL, {
+        letters
+      });
+      words = response.data.body.result.items;
+    }
     yield cancel(slowLoadTask);
-    yield put(fetchWordsSuccess(response.data.body.result.items));
+    yield put(fetchWordsSuccess(words));
   } catch (e) {
     console.error(e);
     yield cancel(slowLoadTask);

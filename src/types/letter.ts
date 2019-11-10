@@ -84,7 +84,10 @@ export const scoreWord = (letters: string): number => {
     }, 0);
 };
 
-const COUNTS: Record<Alpha, number> = {
+const VOWELS: Alpha[] = [Alpha.A, Alpha.E, Alpha.I, Alpha.O, Alpha.U, Alpha.Y];
+
+//eslint:disable-next-line:no-unused-vars
+const _CLASSIC_COUNTS: Record<Alpha, number> = {
   a: 9,
   b: 2,
   c: 2,
@@ -113,14 +116,50 @@ const COUNTS: Record<Alpha, number> = {
   z: 1
 };
 
-export const BAG: Array<Alpha> = Object.keys(COUNTS)
+const _CHALLENGE_COUNTS: Record<Alpha, number> = {
+  a: 3,
+  b: 2,
+  c: 2,
+  d: 4,
+  e: 3,
+  f: 2,
+  g: 3,
+  h: 2,
+  i: 3,
+  j: 1,
+  k: 1,
+  l: 4,
+  m: 2,
+  n: 3,
+  o: 3,
+  p: 2,
+  q: 1,
+  r: 6,
+  s: 4,
+  t: 6,
+  u: 3,
+  v: 2,
+  w: 2,
+  x: 1,
+  y: 2,
+  z: 1
+};
+
+export const BAG: Array<Alpha> = Object.keys(_CHALLENGE_COUNTS)
   .map(l => l as Alpha)
   .reduce((acc: Alpha[], l: Alpha) => {
-    return [...acc, ...new Array(COUNTS[l]).fill(l)];
+    return [...acc, ...new Array(_CHALLENGE_COUNTS[l]).fill(l)];
   }, []);
 
 export const draw = (n: number): { left: Letter[]; drawn: Letter[] } => {
-  const { left, drawn } = new Array(n).fill(0).reduce(
+  const vowel = VOWELS[Math.floor(Math.random() * VOWELS.length)];
+  const firstVowel = BAG.findIndex(l => l === vowel);
+  const afterVowel = [
+    ...BAG.slice(0, firstVowel),
+    ...BAG.slice(firstVowel + 1)
+  ];
+
+  const { left, drawn } = new Array(n - 1).fill(0).reduce(
     ({ left, drawn }: { left: Letter[]; drawn: Letter[] }, _) => {
       const idx = Math.floor(Math.random() * left.length);
       const newLeft = [...left.slice(0, idx), ...left.slice(idx + 1)];
@@ -129,7 +168,7 @@ export const draw = (n: number): { left: Letter[]; drawn: Letter[] } => {
         drawn: [...drawn, left[idx]]
       };
     },
-    { left: BAG, drawn: [] }
+    { left: afterVowel, drawn: [vowel] }
   );
 
   return {
