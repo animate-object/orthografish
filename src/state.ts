@@ -1,7 +1,7 @@
 import { Dimensions, Letter, Select } from "./types";
 import { Slate } from "./types";
 
-export const N_LETTERS = 6;
+export const N_LETTERS = 5;
 export type FetchState =
   | "Uninitialized"
   | "Pending"
