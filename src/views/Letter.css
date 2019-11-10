@@ -1,27 +1,26 @@
 .Letter {
   border-radius: 8px;
-  background-color: burlywood;
-  color: #443322;
+  background-color: var(--yellow);
+  color: var(--black);
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: inset 0 0 3px #444444, 0px 1px 3px 0px #444444;
+  box-shadow: inset 0 0 3px #333333;
   opacity: 0.9;
   transition: ease;
-  text-shadow: 0 0 1px #444444;
+  text-shadow: 0 0 1px #333333;
   cursor: pointer;
   transition: opacity 500ms;
-  margin: 2px;
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-family: var(--serif);
 }
 
 .Letter.Selected {
-  border: 2px solid blue;
+  border: 2px solid var(--cyan);
   margin: 0;
 }
 
 .Letter.Targetable {
-  border: 2px solid red;
+  border: 2px solid var(--red);
   margin: 0;
 }
 

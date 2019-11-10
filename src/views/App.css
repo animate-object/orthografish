@@ -8,23 +8,27 @@
   bottom: 0;
   top: 0;
   left: 0;
-  background-color: white;
+  background-color: var(--white);
 }
 
 .Container {
   margin: 0.5rem;
   height: calc(100% - 1rem);
   width: calc(100% - 1rem);
-  background-color: #ddefef;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border-radius: 8px;
 }
 
 .FreeSpace {
   display: flex;
   padding-bottom: 1rem;
+}
+
+.FreeSpace > .Letter {
+  margin: 2px;
 }
 
 .Spells {
@@ -33,14 +37,14 @@
 }
 
 .NewScore {
-  color: green;
+  color: var(--green);
 }
 
 .Score {
   padding-left: 1rem;
   font-weight: bolder;
   font-size: 1.5rem;
-  color: black;
+  color: var(--black);
 }
 
 .PreviouslySpelled {

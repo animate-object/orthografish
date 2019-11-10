@@ -25,15 +25,20 @@ export const ProbablyLegalDefinitionModal = ({
   visible,
   onClose
 }: Props): JSX.Element => (
-  <Modal visible={visible}>
+  <Modal
+    title={"Definition"}
+    visible={visible}
+    actions={
+      <Button className="Close" onClick={onClose}>
+        Back to the Game
+      </Button>
+    }
+  >
     <iframe
       title="Thanks Jimmy Wales"
       className="GuestContent"
       src={`https://en.wiktionary.org/wiki/${word}#English`}
     />
-    <Button className="Close" onClick={onClose}>
-      Back to the Game
-    </Button>
   </Modal>
 );
 

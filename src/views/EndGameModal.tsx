@@ -33,8 +33,15 @@ export const EndGameModal = ({
   anyUnspelled,
   gaveUp
 }: Props): JSX.Element => (
-  <Modal visible={gaveUp || !anyUnspelled}>
-    <div className="Title">You {anyUnspelled ? "gave up!" : "Won!"}</div>
+  <Modal
+    visible={gaveUp || !anyUnspelled}
+    title={`You ${anyUnspelled ? "gave up!" : "Won!"}`}
+    actions={
+      <Button className="NewGame" onClick={onNewGame}>
+        New Game
+      </Button>
+    }
+  >
     <div className="Words">
       {words.map(([word, spelled]: WordAndSpelled) => (
         <div
@@ -48,10 +55,6 @@ export const EndGameModal = ({
         </div>
       ))}
     </div>
-
-    <Button className="NewGame" onClick={onNewGame}>
-      New Game
-    </Button>
   </Modal>
 );
 

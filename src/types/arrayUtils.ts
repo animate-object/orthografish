@@ -1,7 +1,10 @@
 export const nOf = <T>(n: number, t: T): Array<T> => new Array(n).fill(t);
 
-export const sorted = <T>(unsorted: Array<T>): Array<T> => {
+export const sorted = <T>(
+  unsorted: Array<T>,
+  sortFn?: (a: T, b: T) => number
+): Array<T> => {
   const sorted = [...unsorted];
-  sorted.sort();
+  sorted.sort(sortFn);
   return sorted;
 };

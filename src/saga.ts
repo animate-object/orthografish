@@ -1,10 +1,19 @@
-import { takeEvery, select, put, call, fork } from "@redux-saga/core/effects";
+import {
+  takeEvery,
+  select,
+  put,
+  call,
+  fork,
+  cancel,
+  delay
+} from "@redux-saga/core/effects";
 import {
   ActionTypes,
   FetchWords,
   fetchWords,
   fetchWordsSuccess,
-  fetchWordsFailed
+  fetchWordsFailed,
+  fetchIsSlow
 } from "./actions";
 import { getFreeLetters } from "./selectors";
 import axios from "axios";
@@ -18,16 +27,24 @@ export function* root() {
 }
 
 export function* fetchWordsForLetters({ letters }: FetchWords) {
+  const slowLoadTask = yield fork(slowLoadFeedback);
+
   try {
     const response = yield call(axios.post, URL, {
       letters
     });
-
+    yield cancel(slowLoadTask);
     yield put(fetchWordsSuccess(response.data.body.result.items));
   } catch (e) {
     console.error(e);
+    yield cancel(slowLoadTask);
     yield put(fetchWordsFailed());
   }
+}
+
+export function* slowLoadFeedback() {
+  yield delay(700);
+  yield put(fetchIsSlow());
 }
 
 export function* initializeGame() {

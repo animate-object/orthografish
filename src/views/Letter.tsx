@@ -35,7 +35,7 @@ const Letter = ({
     style={{ ...dimensions }}
     onClick={Handler.noPropagate(() => onClick && onClick())}
   >
-    <span style={{ fontSize: `${0.8 * dimensions.width}px` }}>
+    <span style={{ fontSize: `${0.7 * dimensions.width}px` }}>
       {letter && letter.alpha}
     </span>
   </div>

@@ -1,16 +1,11 @@
 .Spelled {
-  color: green;
+  color: var(--green);
 }
 
 .Unspelled {
-  color: red;
+  color: var(--red);
 }
 
 .Words:not(:last-child) {
-  padding-bottom: 1rem;
-}
-
-.Title {
-  font-weight: bolder;
   padding-bottom: 1rem;
 }

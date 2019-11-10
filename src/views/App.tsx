@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Dimensions, Maybe, Effect, Select } from "../types";
+import { Dimensions, Maybe, Effect, Select, ArrayUtils } from "../types";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import {
@@ -33,6 +33,7 @@ import EndGameModal from "./EndGameModal";
 import { Button } from "./Button";
 import SpelledModal from "./SpelledModal";
 import ProbablyLegalDefinitionModal from "./DefinitionModal";
+import LoadingScreen from "./LoadingScreen";
 
 interface StateProps {
   freeLetters: LetterType.Letter[];
@@ -67,6 +68,12 @@ export class App extends React.PureComponent<Props> {
     this.queueMeasure();
   }
 
+  componentDidUpdate(lastProps: Props) {
+    if (lastProps.showApp !== this.props.showApp) {
+      this.queueMeasure();
+    }
+  }
+
   componentWillUnmount() {
     window.removeEventListener("resize", this.queueMeasure);
   }
@@ -87,65 +94,70 @@ export class App extends React.PureComponent<Props> {
       onShowSpelled,
       onShowDefinition
     } = this.props;
-    return (
-      showApp && (
-        <div
-          className="App"
-          onClick={() =>
-            isTargetable ? onTargetFreeSpace() : onClearSelection()
-          }
-        >
-          <EndGameModal />
-          <SpelledModal />
-          <ProbablyLegalDefinitionModal />
-          <div className="Container" ref={this.primaryContainerRef}>
-            <div className="FreeSpace">
-              {freeLetters.map(l => (
-                <React.Fragment key={l.id}>
-                  <FreeLetter letter={l} />
-                </React.Fragment>
-              ))}
-            </div>
-            <Slate />
 
-            <span
-              className={classNames("Spells", {
-                NewScore: wordIsValid && spellState === "New"
-              })}
-            >
-              {spells}
-              {wordIsValid &&
-                (spellState === "New" ? (
-                  <span className="Score">{`${wordScore} points!`}</span>
-                ) : (
-                  <span className="PreviouslySpelled">
-                    You already spelled this word.
-                  </span>
+    return (
+      <div
+        className="App"
+        onClick={() =>
+          isTargetable ? onTargetFreeSpace() : onClearSelection()
+        }
+      >
+        {showApp ? (
+          <>
+            <EndGameModal />
+            <SpelledModal />
+            <ProbablyLegalDefinitionModal />
+            <div className="Container" ref={this.primaryContainerRef}>
+              <div className="FreeSpace">
+                {ArrayUtils.sorted(freeLetters, LetterType.sort).map(l => (
+                  <React.Fragment key={l.id}>
+                    <FreeLetter letter={l} />
+                  </React.Fragment>
                 ))}
-            </span>
-            <span>You have {unspelled.length} words left to spell.</span>
-            <Button className="GiveUp" onClick={onGiveUp}>
-              Give Up
-            </Button>
-            <Button
-              className="ShowSpelled"
-              onClick={onShowSpelled}
-              buttonType="Secondary"
-            >
-              Spelled
-            </Button>
-            {spellState !== "Nothing" && (
+              </div>
+              <Slate />
+
+              <span
+                className={classNames("Spells", {
+                  NewScore: wordIsValid && spellState === "New"
+                })}
+              >
+                {spells}
+                {wordIsValid &&
+                  (spellState === "New" ? (
+                    <span className="Score">{`${wordScore} points!`}</span>
+                  ) : (
+                    <span className="PreviouslySpelled">
+                      You already spelled this word.
+                    </span>
+                  ))}
+              </span>
+              <span>You have {unspelled.length} words left to spell.</span>
+              <Button className="GiveUp" onClick={onGiveUp}>
+                Give Up
+              </Button>
               <Button
-                className="ShowDefinition"
-                onClick={onShowDefinition}
+                className="ShowSpelled"
+                onClick={onShowSpelled}
                 buttonType="Secondary"
               >
-                Show Definition
+                Spelled
               </Button>
-            )}
-          </div>
-        </div>
-      )
+              {spellState !== "Nothing" && (
+                <Button
+                  className="ShowDefinition"
+                  onClick={onShowDefinition}
+                  buttonType="Secondary"
+                >
+                  Show Definition
+                </Button>
+              )}
+            </div>
+          </>
+        ) : (
+          <LoadingScreen />
+        )}
+      </div>
     );
   };
 

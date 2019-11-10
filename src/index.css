@@ -1,0 +1,18 @@
+:root {
+  --white: #fafdf3;
+  --gray: #b2b2bf;
+  --cyan: #61e8e1;
+  --blue: #331199;
+  --red: #f25757;
+  --yellow: #f2e863;
+  --green: #44af24;
+  --black: #333333;
+  --raised: 0px 1px 3px 0px var(--black);
+  --sans-serif: "Raleway", arial, sans-serif;
+  --serif: "Bitter", Georgia, serif;
+}
+
+body {
+  color: var(--black);
+  font-family: var(--sans-serif);
+}

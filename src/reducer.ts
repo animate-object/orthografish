@@ -3,6 +3,7 @@ import { State, create } from "./state";
 import { Select, UUID, Slate, Result, Maybe } from "./types";
 
 export const reducer = (state: State = create(), action: Action): State => {
+  console.log(action);
   switch (action.type) {
     case ActionTypes.SET_CONTAINER_DIMENSIONS:
       return { ...state, containerDimensions: action.dimensions };
@@ -16,8 +17,15 @@ export const reducer = (state: State = create(), action: Action): State => {
       return { ...state, selected: undefined };
     case ActionTypes.FETCH_WORDS:
       return { ...state, fetchState: "Pending" };
+    case ActionTypes.FETCH_IS_SLOW:
+      return { ...state, fetchState: "StillPending" };
     case ActionTypes.FETCH_WORDS_SUCCESS:
-      return { ...state, unspelled: action.words, spelled: [] };
+      return {
+        ...state,
+        unspelled: action.words,
+        spelled: [],
+        fetchState: "Fetched"
+      };
     case ActionTypes.FETCH_WORDS_FAILED:
       return { ...state, fetchState: "Errored" };
     case ActionTypes.GIVE_UP:

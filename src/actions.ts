@@ -6,6 +6,7 @@ export enum ActionTypes {
   CHOOSE_TARGET = "CHOOSE_TARGET",
   CLEAR_SELECTION = "CLEAR_SELECTION",
   FETCH_WORDS = "FETCH_WORDS",
+  FETCH_IS_SLOW = "FETCH_IS_SLOW",
   FETCH_WORDS_SUCCESS = "FETCH_WORDS_SUCCESS",
   FETCH_WORDS_FAILED = "FETCH_WORDS_FAILED",
   GIVE_UP = "GIVE_UP",
@@ -20,6 +21,7 @@ export type Action =
   | ChooseTarget
   | ClearSelection
   | FetchWords
+  | FetchIsSlow
   | FetchWordsSuccess
   | FetchWordsFailed
   | GiveUp
@@ -49,6 +51,10 @@ export interface ClearSelection {
 export interface FetchWords {
   type: ActionTypes.FETCH_WORDS;
   letters: string;
+}
+
+export interface FetchIsSlow {
+  type: ActionTypes.FETCH_IS_SLOW;
 }
 
 export interface FetchWordsSuccess {
@@ -100,6 +106,10 @@ export const clearSelection = () => ({ type: ActionTypes.CLEAR_SELECTION });
 export const fetchWords = (letters: Letter.Letter[]): FetchWords => ({
   type: ActionTypes.FETCH_WORDS,
   letters: letters.map(l => l.alpha).join("")
+});
+
+export const fetchIsSlow = (): FetchIsSlow => ({
+  type: ActionTypes.FETCH_IS_SLOW
 });
 
 export const fetchWordsSuccess = (words: string[]): FetchWordsSuccess => ({

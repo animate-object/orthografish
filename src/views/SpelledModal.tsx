@@ -24,26 +24,18 @@ type Props = StateProps & DispatchProps;
 export const SpelledModal = ({
   spelled,
   visible,
-  totalCount,
   onClose
 }: Props): JSX.Element => (
-  <Modal visible={visible}>
-    {spelled.length > 0 && (
-      <div className="Title">
-        You've spelled {spelled.length} of {totalCount}
-      </div>
-    )}
+  <Modal
+    title="Spelled so far"
+    visible={visible}
+    actions={<Button onClick={onClose}>Spell some more!</Button>}
+  >
     {spelled.map(word => (
       <div key={word}>{word}</div>
     ))}
-    {spelled.length <= 0 && (
-      <>
-        You haven't spelled anything yet.
-        <br /> Maybe you should . . . <br />
-      </>
-    )}
+    {spelled.length <= 0 && "You haven't spelled anything yet."}
     <br />
-    <Button onClick={onClose}>Spell some more!</Button>
   </Modal>
 );
 

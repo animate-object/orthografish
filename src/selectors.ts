@@ -152,7 +152,7 @@ export const getTotalWords = createSelector(
 
 export const getShouldShowApp = createSelector(
   getState,
-  state => state.fetchState !== "Uninitialized"
+  state => state.fetchState === "Fetched"
 );
 
 export const getShouldShowDefinition = createSelector(

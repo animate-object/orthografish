@@ -137,3 +137,6 @@ export const draw = (n: number): { left: Letter[]; drawn: Letter[] } => {
     drawn: drawn.map((a: Alpha) => create(a))
   };
 };
+
+export const sort = (a: Letter, b: Letter): number =>
+  a.alpha > b.alpha ? 1 : -1;

@@ -2,7 +2,12 @@ import { Dimensions, Letter, Select } from "./types";
 import { Slate } from "./types";
 
 export const N_LETTERS = 6;
-export type FetchState = "Uninitialized" | "Pending" | "Fetched" | "Errored";
+export type FetchState =
+  | "Uninitialized"
+  | "Pending"
+  | "StillPending"
+  | "Fetched"
+  | "Errored";
 export type SpellState = "New" | "Previous" | "Nothing";
 
 export interface State {
