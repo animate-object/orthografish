@@ -35,7 +35,11 @@ export const SpelledModal = ({
   hints
 }: Props): JSX.Element => (
   <Modal
-    title="Spelled so far 🐟"
+    title={
+      <>
+        Spelled so far <Emoji content="🐟" label="Spelling Fish" />
+      </>
+    }
     visible={visible}
     actions={
       <Button onClick={onClose}>

@@ -36,7 +36,12 @@ export const EndGameModal = ({
 }: Props): JSX.Element => (
   <Modal
     visible={gaveUp || !anyUnspelled}
-    title={`You ${anyUnspelled ? "gave up!" : "Won!"} 🐋`}
+    title={
+      <>
+        You ${anyUnspelled ? "gave up!" : "Won!"}{" "}
+        <Emoji label="End game whale" content="🐋" />
+      </>
+    }
     actions={
       <Button className="NewGame" onClick={onNewGame}>
         New Game <Emoji label="New game whale" content="🐳" />

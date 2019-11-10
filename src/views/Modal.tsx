@@ -2,7 +2,7 @@ import React from "react";
 import "./Modal.css";
 
 interface Props {
-  title: string;
+  title: React.ReactNode;
   actions?: React.ReactNode;
   children: React.ReactNode;
   visible: boolean;
