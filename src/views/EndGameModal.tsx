@@ -38,7 +38,7 @@ export const EndGameModal = ({
     visible={gaveUp || !anyUnspelled}
     title={
       <>
-        You ${anyUnspelled ? "gave up!" : "Won!"}{" "}
+        You {anyUnspelled ? "gave up!" : "Won!"}{" "}
         <Emoji label="End game whale" content="🐋" />
       </>
     }
