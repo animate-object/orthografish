@@ -14,6 +14,7 @@ import {
   getUnspelledCount
 } from "../selectors";
 import { connect } from "react-redux";
+import { Emoji } from "./Emoji";
 
 interface StateProps {
   words: Array<WordAndSpelled>;
@@ -35,10 +36,10 @@ export const EndGameModal = ({
 }: Props): JSX.Element => (
   <Modal
     visible={gaveUp || !anyUnspelled}
-    title={`You ${anyUnspelled ? "gave up!" : "Won!"}`}
+    title={`You ${anyUnspelled ? "gave up!" : "Won!"} 🐋`}
     actions={
       <Button className="NewGame" onClick={onNewGame}>
-        New Game
+        New Game <Emoji label="New game whale" content="🐳" />
       </Button>
     }
   >

@@ -36,6 +36,7 @@ import { Button } from "./Button";
 import SpelledModal from "./SpelledModal";
 import ProbablyLegalDefinitionModal from "./DefinitionModal";
 import LoadingScreen from "./LoadingScreen";
+import { Emoji } from "./Emoji";
 
 interface StateProps {
   freeLetters: LetterType.Letter[];
@@ -140,14 +141,14 @@ export class App extends React.PureComponent<Props> {
               </span>
               <span>You have {unspelled.length} words left to spell.</span>
               <Button className="GiveUp" onClick={onGiveUp}>
-                Give Up 🦈
+                Give up! <Emoji label="Give up shark" content="🦈" />
               </Button>
               <Button
                 className="ShowSpelled"
                 onClick={onShowSpelled}
                 buttonType="Secondary"
               >
-                Spelled 🐠
+                Spelled <Emoji label="Give up shark" content="🐠" />
               </Button>
               {spellState !== "Nothing" && (
                 <Button
@@ -155,7 +156,7 @@ export class App extends React.PureComponent<Props> {
                   onClick={onShowDefinition}
                   buttonType="Secondary"
                 >
-                  Show Definition 🐬
+                  Dictionary <Emoji label="Dictionary Dolphin" content="🐬" />
                 </Button>
               )}
               {showClearSlate && (
@@ -164,7 +165,8 @@ export class App extends React.PureComponent<Props> {
                   onClick={onClearSlate}
                   buttonType="Secondary"
                 >
-                  Clear Slate 🐡
+                  Clear Slate{" "}
+                  <Emoji label="Blow up the board puffer fish" content="🐡" />
                 </Button>
               )}
             </div>

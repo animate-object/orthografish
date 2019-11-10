@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "./Modal";
 import { Button } from "./Button";
-import { Effect } from "../types";
+import { Effect, ArrayUtils } from "../types";
 import { connect } from "react-redux";
 import {
   getSpelled,
@@ -13,6 +13,7 @@ import { Dispatch } from "redux";
 import { showSpelled } from "../actions";
 import { State } from "../state";
 import "./SpelledModal.css";
+import { Emoji } from "./Emoji";
 
 interface StateProps {
   spelled: string[];
@@ -36,10 +37,14 @@ export const SpelledModal = ({
   <Modal
     title="Spelled so far 🐟"
     visible={visible}
-    actions={<Button onClick={onClose}>Spell some more! 🐙</Button>}
+    actions={
+      <Button onClick={onClose}>
+        Spell some more! <Emoji label="Return to game octopus" content="🐙" />
+      </Button>
+    }
   >
     <div className="SpelledList">
-      {spelled.map(word => (
+      {ArrayUtils.sorted(spelled).map(word => (
         <div key={word}>{word}</div>
       ))}
       {spelled.length <= 0 && "You haven't spelled anything yet."}
