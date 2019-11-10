@@ -3,7 +3,12 @@ import { Modal } from "./Modal";
 import { Button } from "./Button";
 import { Effect } from "../types";
 import { connect } from "react-redux";
-import { getSpelled, getShowSpelled, getTotalWords } from "../selectors";
+import {
+  getSpelled,
+  getShowSpelled,
+  getTotalWords,
+  getHints
+} from "../selectors";
 import { Dispatch } from "redux";
 import { showSpelled } from "../actions";
 import { State } from "../state";
@@ -13,6 +18,7 @@ interface StateProps {
   spelled: string[];
   visible: boolean;
   totalCount: number;
+  hints: Record<number, number>;
 }
 
 interface DispatchProps {
@@ -24,17 +30,40 @@ type Props = StateProps & DispatchProps;
 export const SpelledModal = ({
   spelled,
   visible,
-  onClose
+  onClose,
+  hints
 }: Props): JSX.Element => (
   <Modal
-    title="Spelled so far"
+    title="Spelled so far 🐟"
     visible={visible}
-    actions={<Button onClick={onClose}>Spell some more!</Button>}
+    actions={<Button onClick={onClose}>Spell some more! 🐙</Button>}
   >
-    {spelled.map(word => (
-      <div key={word}>{word}</div>
-    ))}
-    {spelled.length <= 0 && "You haven't spelled anything yet."}
+    <div className="SpelledList">
+      {spelled.map(word => (
+        <div key={word}>{word}</div>
+      ))}
+      {spelled.length <= 0 && "You haven't spelled anything yet."}
+    </div>
+    <div className="Hints">Need a hint ? </div>
+    {Object.keys(hints)
+      .map(key => (key as any) as number)
+      .map((length: number) => {
+        if (hints[length] === 0) {
+          return (
+            <div className="Hint" key={length}>
+              You've spelled all the {length} letter words
+            </div>
+          );
+        } else {
+          const left = hints[length];
+          return (
+            <div className="Hint" key={length}>
+              There {left === 1 ? "is" : "are"} {left} more {length} letter word
+              {left === 1 ? "" : "s"} to spell.
+            </div>
+          );
+        }
+      })}
     <br />
   </Modal>
 );
@@ -42,7 +71,8 @@ export const SpelledModal = ({
 const mapStateToProps = (state: State): StateProps => ({
   spelled: getSpelled(state),
   visible: getShowSpelled(state),
-  totalCount: getTotalWords(state)
+  totalCount: getTotalWords(state),
+  hints: getHints(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({

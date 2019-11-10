@@ -139,6 +139,18 @@ export const getEndGameWords = createSelector(
   }
 );
 
+export const getHints = createSelector(
+  getUnspelled,
+  unspelled =>
+    unspelled.reduce(
+      (acc: Record<number, number>, cur: string) => ({
+        ...acc,
+        [cur.length]: (acc[cur.length] || 0) + 1
+      }),
+      {}
+    )
+);
+
 export const getShowSpelled = createSelector(
   getState,
   state => state.showSpelled

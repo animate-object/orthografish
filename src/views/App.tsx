@@ -140,14 +140,14 @@ export class App extends React.PureComponent<Props> {
               </span>
               <span>You have {unspelled.length} words left to spell.</span>
               <Button className="GiveUp" onClick={onGiveUp}>
-                Give Up
+                Give Up 🦈
               </Button>
               <Button
                 className="ShowSpelled"
                 onClick={onShowSpelled}
                 buttonType="Secondary"
               >
-                Spelled
+                Spelled 🐠
               </Button>
               {spellState !== "Nothing" && (
                 <Button
@@ -155,7 +155,7 @@ export class App extends React.PureComponent<Props> {
                   onClick={onShowDefinition}
                   buttonType="Secondary"
                 >
-                  Show Definition
+                  Show Definition 🐬
                 </Button>
               )}
               {showClearSlate && (
@@ -164,7 +164,7 @@ export class App extends React.PureComponent<Props> {
                   onClick={onClearSlate}
                   buttonType="Secondary"
                 >
-                  Clear Slate
+                  Clear Slate 🐡
                 </Button>
               )}
             </div>
