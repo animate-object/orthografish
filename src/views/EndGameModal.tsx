@@ -14,7 +14,7 @@ import {
   getUnspelledCount
 } from "../selectors";
 import { connect } from "react-redux";
-import { Emoji } from "./Emoji";
+import { Emoji } from "./design/Emoji";
 
 interface StateProps {
   words: Array<WordAndSpelled>;

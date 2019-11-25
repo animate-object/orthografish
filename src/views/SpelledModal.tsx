@@ -13,7 +13,7 @@ import { Dispatch } from "redux";
 import { showSpelled } from "../actions";
 import { State } from "../state";
 import "./SpelledModal.css";
-import { Emoji } from "./Emoji";
+import { Emoji } from "./design/Emoji";
 
 interface StateProps {
   spelled: string[];

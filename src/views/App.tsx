@@ -36,7 +36,7 @@ import { Button } from "./design/Button";
 import SpelledModal from "./SpelledModal";
 import ProbablyLegalDefinitionModal from "./DefinitionModal";
 import LoadingScreen from "./LoadingScreen";
-import { Emoji } from "./Emoji";
+import { Emoji } from "./design/Emoji";
 
 interface StateProps {
   freeLetters: LetterType.Letter[];
