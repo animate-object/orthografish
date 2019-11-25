@@ -32,7 +32,7 @@ import FreeLetter from "./FreeLetter";
 import Slate from "./Slate";
 import classNames from "classnames";
 import EndGameModal from "./EndGameModal";
-import { Button } from "./Button";
+import { Button } from "./design/Button";
 import SpelledModal from "./SpelledModal";
 import ProbablyLegalDefinitionModal from "./DefinitionModal";
 import LoadingScreen from "./LoadingScreen";

@@ -1,6 +1,6 @@
 import React from "react";
-import { Modal } from "./Modal";
-import { Button } from "./Button";
+import { Modal } from "./design/Modal";
+import { Button } from "./design/Button";
 import { Effect, ArrayUtils } from "../types";
 import { connect } from "react-redux";
 import {

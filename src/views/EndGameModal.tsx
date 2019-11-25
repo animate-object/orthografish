@@ -1,7 +1,7 @@
 import React from "react";
 import "./EndGameModal.css";
-import { Modal } from "./Modal";
-import { Button } from "./Button";
+import { Modal } from "./design/Modal";
+import { Button } from "./design/Button";
 import { Effect } from "../types";
 import { newGame } from "../actions";
 import { Dispatch } from "redux";
