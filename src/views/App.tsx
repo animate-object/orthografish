@@ -173,7 +173,7 @@ export class App extends React.PureComponent<Props> {
             buttonType="Default"
             disabled={!canSpell}
           >
-            Spell
+            Spell <Emoji label="Spell fish" content="🐟" />
           </Button>
         }
         right={
