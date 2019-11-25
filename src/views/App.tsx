@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Dimensions, Maybe, Effect, Select, ArrayUtils } from "../types";
+import { Dimensions, Maybe, Effect, Select } from "../types";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import {
@@ -28,15 +28,18 @@ import {
   getShouldShowApp,
   getShowClearSlateButton
 } from "../selectors";
-import FreeLetter from "./FreeLetter";
 import Slate from "./Slate";
-import classNames from "classnames";
 import EndGameModal from "./EndGameModal";
 import { Button } from "./design/Button";
 import SpelledModal from "./SpelledModal";
 import ProbablyLegalDefinitionModal from "./DefinitionModal";
 import LoadingScreen from "./LoadingScreen";
 import { Emoji } from "./design/Emoji";
+import { FreeSpace } from "./FreeSpace";
+import { GameInfo } from "./GameInfo";
+import { Actions } from "./design/Actions";
+import { Modals } from "./Modals";
+import { Page } from "./design/Page";
 
 interface StateProps {
   freeLetters: LetterType.Letter[];
@@ -64,9 +67,7 @@ interface DispatchProps {
 type Props = StateProps & DispatchProps;
 
 export class App extends React.PureComponent<Props> {
-  private primaryContainerRef: React.RefObject<
-    HTMLDivElement
-  > = React.createRef();
+  private rulerRef: React.RefObject<HTMLDivElement> = React.createRef();
 
   componentDidMount() {
     window.addEventListener("resize", this.queueMeasure);
@@ -93,13 +94,8 @@ export class App extends React.PureComponent<Props> {
       wordScore,
       showApp,
       spellState,
-      showClearSlate,
       onClearSelection,
-      onTargetFreeSpace,
-      onGiveUp,
-      onShowSpelled,
-      onShowDefinition,
-      onClearSlate
+      onTargetFreeSpace
     } = this.props;
 
     return (
@@ -111,70 +107,72 @@ export class App extends React.PureComponent<Props> {
       >
         {showApp ? (
           <>
-            <EndGameModal />
-            <SpelledModal />
-            <ProbablyLegalDefinitionModal />
-            <div className="Container" ref={this.primaryContainerRef}>
-              <div className="FreeSpace">
-                {ArrayUtils.sorted(freeLetters, LetterType.sort).map(l => (
-                  <React.Fragment key={l.id}>
-                    <FreeLetter letter={l} />
-                  </React.Fragment>
-                ))}
-              </div>
+            <Modals />
+            <div className="Ruler" ref={this.rulerRef} />
+            <Page
+              header={this.secondaryActions()}
+              footer={this.primaryActions()}
+            >
+              <FreeSpace freeLetters={freeLetters} />
               <Slate />
-
-              <span
-                className={classNames("Spells", {
-                  NewScore: wordIsValid && spellState === "New"
-                })}
-              >
-                {spells}
-                {wordIsValid &&
-                  (spellState === "New" ? (
-                    <span className="Score">{`${wordScore} points!`}</span>
-                  ) : (
-                    <span className="PreviouslySpelled">
-                      You already spelled this word.
-                    </span>
-                  ))}
-              </span>
-              <span>You have {unspelled.length} words left to spell.</span>
-              <Button className="GiveUp" onClick={onGiveUp}>
-                Give up! <Emoji label="Give up shark" content="🦈" />
-              </Button>
-              <Button
-                className="ShowSpelled"
-                onClick={onShowSpelled}
-                buttonType="Secondary"
-              >
-                Spelled <Emoji label="Give up shark" content="🐠" />
-              </Button>
-              {spellState !== "Nothing" && (
-                <Button
-                  className="ShowDefinition"
-                  onClick={onShowDefinition}
-                  buttonType="Secondary"
-                >
-                  Dictionary <Emoji label="Dictionary Dolphin" content="🐬" />
-                </Button>
-              )}
-              {showClearSlate && (
-                <Button
-                  className="ClearSlate"
-                  onClick={onClearSlate}
-                  buttonType="Secondary"
-                >
-                  Clear Slate{" "}
-                  <Emoji label="Blow up the board puffer fish" content="🐡" />
-                </Button>
-              )}
-            </div>
+              <GameInfo
+                spellState={spellState}
+                spells={spells}
+                wordScore={wordScore}
+                unspelled={unspelled}
+                wordIsValid={wordIsValid}
+              />
+            </Page>
           </>
         ) : (
           <LoadingScreen />
         )}
       </div>
+    );
+  };
+
+  private secondaryActions = () => {
+    const { onGiveUp, onShowSpelled } = this.props;
+    return (
+      <Actions
+        left={
+          <Button onClick={onGiveUp}>
+            Give up! <Emoji label="Give up shark" content="🦈" />
+          </Button>
+        }
+        right={
+          <Button onClick={onShowSpelled} buttonType="Secondary">
+            Spelled <Emoji label="Give up shark" content="🐠" />
+          </Button>
+        }
+      />
+    );
+  };
+
+  private primaryActions = () => {
+    const {
+      spellState,
+      onShowDefinition,
+      onClearSlate,
+      showClearSlate
+    } = this.props;
+    return (
+      <Actions
+        left={
+          spellState !== "Nothing" && (
+            <Button onClick={onShowDefinition} buttonType="Secondary">
+              Def <Emoji label="Dictionary Dolphin" content="🐬" />
+            </Button>
+          )
+        }
+        right={
+          showClearSlate && (
+            <Button onClick={onClearSlate} buttonType="Secondary">
+              Clear <Emoji label="Blow up the board puffer fish" content="🐡" />
+            </Button>
+          )
+        }
+      />
     );
   };
 
@@ -185,7 +183,7 @@ export class App extends React.PureComponent<Props> {
           const rect = div.getBoundingClientRect();
           this.props.onMeasure(Dimensions.create(rect.width, rect.height));
         }, ref.current),
-      this.primaryContainerRef
+      this.rulerRef
     );
   };
 

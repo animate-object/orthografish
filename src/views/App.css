@@ -9,71 +9,9 @@
   top: 0;
   left: 0;
   background-color: var(--white);
-}
-
-.Container {
   margin: 0.5rem;
-  height: calc(100% - 1rem);
+}
+
+.Ruler {
   width: calc(100% - 1rem);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-}
-
-.FreeSpace {
-  display: flex;
-  padding-bottom: 1rem;
-}
-
-.FreeSpace > .Letter {
-  margin: 2px;
-}
-
-.Spells {
-  font-size: 3rem;
-  height: 4rem;
-}
-
-.NewScore {
-  color: var(--green);
-}
-
-.Score {
-  padding-left: 1rem;
-  font-weight: bolder;
-  font-size: 1.5rem;
-  color: var(--black);
-}
-
-.PreviouslySpelled {
-  padding-left: 1rem;
-  font-size: 1rem;
-}
-
-.GiveUp {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  font-size: 1rem;
-}
-
-.ShowSpelled {
-  position: fixed;
-  top: 1rem;
-  left: 1rem;
-  font-size: 1rem;
-}
-
-.ShowDefinition {
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-}
-
-.ClearSlate {
-  position: fixed;
-  bottom: 1rem;
-  left: 1rem;
 }

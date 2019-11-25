@@ -1,0 +1,8 @@
+.FreeSpace {
+  display: flex;
+  padding-bottom: 1rem;
+}
+
+.FreeSpace > .Letter {
+  margin: 2px;
+}
