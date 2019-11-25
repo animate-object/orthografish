@@ -13,7 +13,8 @@ export enum ActionTypes {
   GIVE_UP = "GIVE_UP",
   NEW_GAME = "NEW_GAME",
   SHOW_SPELLED = "SHOW_SPELLED",
-  SHOW_DEFINITION = "SHOW_DEFINITION"
+  SHOW_DEFINITION = "SHOW_DEFINITION",
+  SUBMIT_WORD = "SUBMIT_WORD"
 }
 
 export type Action =
@@ -29,7 +30,8 @@ export type Action =
   | GiveUp
   | NewGame
   | ShowSpelled
-  | ShowDefinition;
+  | ShowDefinition
+  | SubmitWord;
 
 export interface SetContainerDimensions {
   type: ActionTypes.SET_CONTAINER_DIMENSIONS;
@@ -90,6 +92,10 @@ export interface ShowDefinition {
   show: boolean;
 }
 
+export interface SubmitWord {
+  type: ActionTypes.SUBMIT_WORD;
+}
+
 export const setContainerDimensions = (
   dimensions: Dimensions.Dimensions
 ): SetContainerDimensions => ({
@@ -142,3 +148,5 @@ export const showDefinition = (show: boolean): ShowDefinition => ({
   type: ActionTypes.SHOW_DEFINITION,
   show
 });
+
+export const submitWord = (): SubmitWord => ({ type: ActionTypes.SUBMIT_WORD });

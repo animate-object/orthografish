@@ -11,7 +11,8 @@ import {
   newGame,
   showSpelled,
   showDefinition,
-  clearSlate
+  clearSlate,
+  submitWord
 } from "../actions";
 import { Letter as LetterType } from "../types";
 import * as _ from "lodash";
@@ -26,13 +27,10 @@ import {
   getUnspelled,
   getSpelled,
   getShouldShowApp,
-  getShowClearSlateButton
+  getCanSpell
 } from "../selectors";
 import Slate from "./Slate";
-import EndGameModal from "./EndGameModal";
 import { Button } from "./design/Button";
-import SpelledModal from "./SpelledModal";
-import ProbablyLegalDefinitionModal from "./DefinitionModal";
 import LoadingScreen from "./LoadingScreen";
 import { Emoji } from "./design/Emoji";
 import { FreeSpace } from "./FreeSpace";
@@ -51,7 +49,7 @@ interface StateProps {
   wordScore: Maybe.Maybe<number>;
   spellState: SpellState;
   showApp: boolean;
-  showClearSlate: boolean;
+  canSpell: boolean;
 }
 interface DispatchProps {
   onMeasure: Effect.Effect<Dimensions.Dimensions>;
@@ -62,6 +60,7 @@ interface DispatchProps {
   onShowSpelled: Effect.Effect0;
   onShowDefinition: Effect.Effect0;
   onClearSlate: Effect.Effect0;
+  onSubmitWord: Effect.Effect0;
 }
 
 type Props = StateProps & DispatchProps;
@@ -152,25 +151,39 @@ export class App extends React.PureComponent<Props> {
   private primaryActions = () => {
     const {
       spellState,
+      canSpell,
       onShowDefinition,
       onClearSlate,
-      showClearSlate
+      onSubmitWord
     } = this.props;
     return (
       <Actions
         left={
-          spellState !== "Nothing" && (
-            <Button onClick={onShowDefinition} buttonType="Secondary">
-              Def <Emoji label="Dictionary Dolphin" content="🐬" />
-            </Button>
-          )
+          <Button
+            onClick={onShowDefinition}
+            buttonType="Secondary"
+            disabled={spellState === "Missed" || spellState === "Spelling"}
+          >
+            Def <Emoji label="Dictionary Dolphin" content="🐬" />
+          </Button>
+        }
+        middle={
+          <Button
+            onClick={onSubmitWord}
+            buttonType="Default"
+            disabled={!canSpell}
+          >
+            Spell
+          </Button>
         }
         right={
-          showClearSlate && (
-            <Button onClick={onClearSlate} buttonType="Secondary">
-              Clear <Emoji label="Blow up the board puffer fish" content="🐡" />
-            </Button>
-          )
+          <Button
+            onClick={onClearSlate}
+            buttonType="Secondary"
+            disabled={!canSpell}
+          >
+            Clear <Emoji label="Blow up the board puffer fish" content="🐡" />
+          </Button>
         }
       />
     );
@@ -200,7 +213,8 @@ export const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   onNewGame: () => dispatch(newGame()),
   onShowSpelled: () => dispatch(showSpelled(true)),
   onShowDefinition: () => dispatch(showDefinition(true)),
-  onClearSlate: () => dispatch(clearSlate())
+  onClearSlate: () => dispatch(clearSlate()),
+  onSubmitWord: () => dispatch(submitWord())
 });
 
 export const mapStateToProps = (state: State): StateProps => ({
@@ -213,7 +227,7 @@ export const mapStateToProps = (state: State): StateProps => ({
   wordScore: getCurrentWordScore(state),
   spellState: getSpellState(state),
   showApp: getShouldShowApp(state),
-  showClearSlate: getShowClearSlateButton(state)
+  canSpell: getCanSpell(state)
 });
 
 export default connect(

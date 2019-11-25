@@ -11,3 +11,7 @@
 .Button.Secondary {
   background-color: var(--gray);
 }
+
+.Button:disabled {
+  opacity: 0.5;
+}

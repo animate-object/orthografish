@@ -11,7 +11,9 @@ import {
   getGaveUp,
   WordAndSpelled,
   getEndGameWords,
-  getUnspelledCount
+  getUnspelledCount,
+  getGameRating,
+  getMissed
 } from "../selectors";
 import { connect } from "react-redux";
 import { Emoji } from "./design/Emoji";
@@ -20,6 +22,8 @@ interface StateProps {
   words: Array<WordAndSpelled>;
   gaveUp: boolean;
   anyUnspelled: boolean;
+  rating: number;
+  missed: string[];
 }
 
 interface DispatchProps {
@@ -32,7 +36,9 @@ export const EndGameModal = ({
   words,
   onNewGame,
   anyUnspelled,
-  gaveUp
+  gaveUp,
+  rating,
+  missed
 }: Props): JSX.Element => (
   <Modal
     visible={gaveUp || !anyUnspelled}
@@ -48,6 +54,22 @@ export const EndGameModal = ({
       </Button>
     }
   >
+    <hr />
+    Your score:{" "}
+    <span
+      className={classNames({
+        ["Good"]: rating > 80,
+        ["Okay"]: rating <= 80 && rating > 50,
+        ["Bad"]: rating <= 50 && rating > 0,
+        ["Awful"]: rating <= 0
+      })}
+    >
+      {rating.toFixed(2)}
+    </span>
+    <hr />
+    <div className="Info">
+      You spelled the green words, and missed the red ones.
+    </div>
     <div className="Words">
       {words.map(([word, spelled]: WordAndSpelled) => (
         <div
@@ -60,6 +82,18 @@ export const EndGameModal = ({
           {word}
         </div>
       ))}
+
+      {missed.length > 0 && (
+        <>
+          <hr />
+          <div className="Info">These ones weren't even words...</div>
+          <div className="Words">
+            {missed.map(word => (
+              <div key={word}>{word}</div>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   </Modal>
 );
@@ -71,7 +105,9 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
 const mapStateToProps = (state: State): StateProps => ({
   gaveUp: getGaveUp(state),
   words: getEndGameWords(state),
-  anyUnspelled: getUnspelledCount(state) > 0
+  anyUnspelled: getUnspelledCount(state) > 0,
+  rating: getGameRating(state),
+  missed: getMissed(state)
 });
 
 export default connect(

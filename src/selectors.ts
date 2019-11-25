@@ -49,17 +49,22 @@ export const getSelectedId = createSelector(
 
 export const getSpelled = createSelector(
   getState,
-  state => state.spelled
+  state => Array.from(state.spelled)
 );
 
 export const getUnspelled = createSelector(
   getState,
-  state => state.unspelled
+  state => Array.from(state.unspelled)
+);
+
+export const getMissed = createSelector(
+  getState,
+  state => Array.from(state.missed)
 );
 
 export const getSpelledCount = createSelector(
-  getState,
-  state => state.spelled.length
+  getSpelled,
+  spelled => spelled.length
 );
 
 export const getUnspelledCount = createSelector(
@@ -75,7 +80,7 @@ export const getCurrentWord = createSelector(
 export const getCurrentWordIsValid = createSelector(
   getCurrentWord,
   getSpelled,
-  (word, spelled) => spelled.indexOf(word) >= 0
+  (word, spelled) => spelled.indexOf(word) > -1
 );
 
 export const getCurrentWordScore = createSelector(
@@ -172,7 +177,17 @@ export const getShouldShowDefinition = createSelector(
   state => state.showDefinition
 );
 
-export const getShowClearSlateButton = createSelector(
+export const getCanSpell = createSelector(
   getState,
-  state => state.slate.contents.some(v => v != null)
+  state => state.slate.contents.filter(v => v != null).length > 1
+);
+
+export const getGameRating = createSelector(
+  getState,
+  ({ spelled, unspelled, missed }) => {
+    const totalPossible = spelled.size + unspelled.size;
+    const spelledFactor = spelled.size / totalPossible;
+    const missedFactor = missed.size / totalPossible;
+    return 100 * spelledFactor - 100 * missedFactor;
+  }
 );

@@ -8,7 +8,7 @@ export type FetchState =
   | "StillPending"
   | "Fetched"
   | "Errored";
-export type SpellState = "New" | "Previous" | "Nothing";
+export type SpellState = "New" | "Previous" | "Missed" | "Spelling";
 
 export interface State {
   containerDimensions: Dimensions.Dimensions;
@@ -17,8 +17,9 @@ export interface State {
   bag: Letter.Letter[];
   selected?: Select.Selection;
   spells: string;
-  unspelled: string[];
-  spelled: string[];
+  unspelled: Set<string>;
+  spelled: Set<string>;
+  missed: Set<string>;
   spellState: SpellState;
   fetchState: FetchState;
   hasGivenUp: boolean;
@@ -34,9 +35,10 @@ export const create = (init: Partial<State> = {}): State => {
     freeLetters: drawn,
     bag: left,
     spells: "",
-    unspelled: [],
-    spelled: [],
-    spellState: "Nothing",
+    unspelled: new Set(),
+    spelled: new Set(),
+    missed: new Set(),
+    spellState: "Spelling",
     fetchState: "Uninitialized",
     hasGivenUp: false,
     showSpelled: false,

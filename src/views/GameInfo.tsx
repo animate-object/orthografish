@@ -26,15 +26,17 @@ export const GameInfo = ({
       })}
     >
       {spells}
-      {wordIsValid &&
-        (spellState === "New" ? (
-          <span className="Score">{`${wordScore} points!`}</span>
-        ) : (
-          <span className="PreviouslySpelled">
-            You already spelled this word.
-          </span>
-        ))}
     </span>
-    <span>You have {unspelled.length} words left to spell.</span>
+    {spellState === "New" && (
+      <span className="Score">{`${wordScore} points!`}</span>
+    )}
+    {spellState === "Previous" && (
+      <span className="PreviouslySpelled">You already spelled this word.</span>
+    )}
+    {spellState === "Missed" && (
+      <span className="Missed">That's not a word!</span>
+    )}
+    {spellState === "Spelling" && <span>Letp's spell!</span>}
+    <span>You have {unspelled.length} words to go.</span>
   </>
 );

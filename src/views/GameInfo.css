@@ -8,13 +8,13 @@
 }
 
 .Score {
-  padding-left: 1rem;
-  font-weight: bolder;
-  font-size: 1.5rem;
   color: var(--black);
 }
 
 .PreviouslySpelled {
-  padding-left: 1rem;
-  font-size: 1rem;
+  color: var(--gray);
+}
+
+.Missed {
+  color: var(--red);
 }

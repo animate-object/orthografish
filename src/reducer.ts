@@ -11,21 +11,26 @@ export const reducer = (state: State = create(), action: Action): State => {
       return { ...state, selected: action.selection };
     case ActionTypes.CHOOSE_TARGET:
       const updated = chooseTarget(state, action.target.type, action.target.id);
-      const spells = { ...updated, spells: Slate.spells(updated.slate) };
-      return updateSpelled(spells);
+      return {
+        ...updated,
+        spells: Slate.spells(updated.slate),
+        spellState: "Spelling"
+      };
+    case ActionTypes.SUBMIT_WORD:
+      return updateSpelled(state);
     case ActionTypes.CLEAR_SELECTION:
       return { ...state, selected: undefined };
     case ActionTypes.CLEAR_SLATE:
-      const cleared = {
+      return {
         ...state,
         freeLetters: [
           ...state.freeLetters,
           ...ArrayUtils.nonNull(state.slate.contents)
         ],
         slate: Slate.create(N_LETTERS),
-        spells: ""
+        spells: "",
+        spellState: "Spelling"
       };
-      return updateSpelled(cleared);
     case ActionTypes.FETCH_WORDS:
       return { ...state, fetchState: "Pending" };
     case ActionTypes.FETCH_IS_SLOW:
@@ -33,8 +38,9 @@ export const reducer = (state: State = create(), action: Action): State => {
     case ActionTypes.FETCH_WORDS_SUCCESS:
       return {
         ...state,
-        unspelled: action.words,
-        spelled: [],
+        unspelled: new Set(action.words),
+        spelled: new Set(),
+        missed: new Set(),
         fetchState: "Fetched"
       };
     case ActionTypes.FETCH_WORDS_FAILED:
@@ -64,20 +70,26 @@ const clearSelection = (state: State): State => ({
 });
 
 const updateSpelled = (state: State): State => {
-  const unspelledIdx = state.unspelled.indexOf(state.spells);
-  const spelledIdx = state.spelled.indexOf(state.spells);
+  const inUnspelled = state.unspelled.has(state.spells);
+  const inSpelled = state.spelled.has(state.spells);
+  const newUnspelled = new Set(state.unspelled);
+  const newSpelled = new Set(state.spelled);
+  const newMissed = new Set(state.missed);
 
-  if (unspelledIdx >= 0 && spelledIdx < 0) {
+  if (inUnspelled && !inSpelled) {
+    newUnspelled.delete(state.spells);
+    newSpelled.add(state.spells);
     return {
       ...state,
-      unspelled: state.unspelled.filter(word => word !== state.spells),
-      spelled: [...state.spelled, state.spells],
+      unspelled: newUnspelled,
+      spelled: newSpelled,
       spellState: "New"
     };
-  } else if (spelledIdx >= 0) {
+  } else if (inSpelled) {
     return { ...state, spellState: "Previous" };
   } else {
-    return { ...state, spellState: "Nothing" };
+    newMissed.add(state.spells);
+    return { ...state, spellState: "Missed", missed: newMissed };
   }
 };
 
