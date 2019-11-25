@@ -36,7 +36,7 @@ export const GameInfo = ({
     {spellState === "Missed" && (
       <span className="Missed">That's not a word!</span>
     )}
-    {spellState === "Spelling" && <span>Letp's spell!</span>}
+    {spellState === "Spelling" && <span>Let's spell!</span>}
     <span>You have {unspelled.length} words to go.</span>
   </>
 );
