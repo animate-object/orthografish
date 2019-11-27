@@ -5,6 +5,12 @@
   padding: 1rem 0;
 }
 
+@media only screen and (orientation: landscape) and (max-width: 800px) {
+  .Spells {
+    padding: 0;
+  }
+}
+
 .NewScore {
   color: var(--green);
 }

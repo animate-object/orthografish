@@ -3,6 +3,7 @@
   justify-content: space-between;
   width: 100%;
   flex-shrink: 1;
+  height: calc(var(--font-md) + 0.5rem);
 }
 
 .Right {
