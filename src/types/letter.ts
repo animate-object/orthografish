@@ -86,7 +86,7 @@ export const scoreWord = (letters: string): number => {
 
 const VOWELS: Alpha[] = [Alpha.A, Alpha.E, Alpha.I, Alpha.O, Alpha.U, Alpha.Y];
 
-//eslint:disable-next-line:no-unused-vars
+// eslint-disable-next-line
 const _CLASSIC_COUNTS: Record<Alpha, number> = {
   a: 9,
   b: 2,

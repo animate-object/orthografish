@@ -58,10 +58,10 @@ export const EndGameModal = ({
     Your score:{" "}
     <span
       className={classNames({
-        ["Good"]: rating > 80,
-        ["Okay"]: rating <= 80 && rating > 50,
-        ["Bad"]: rating <= 50 && rating > 0,
-        ["Awful"]: rating <= 0
+        Good: rating > 80,
+        Okay: rating <= 80 && rating > 50,
+        Bad: rating <= 50 && rating > 0,
+        Awful: rating <= 0
       })}
     >
       {rating.toFixed(2)}

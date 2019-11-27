@@ -1,6 +1,5 @@
 import {
   takeEvery,
-  select,
   put,
   call,
   fork,
@@ -63,6 +62,7 @@ export function* initializeGame() {
     Letter.draw,
     N_LETTERS
   );
+
   const wordsResult: Result.Result<string[]> = yield call(
     fetchWordsForLetters,
     drawn.map(l => l.alpha)
