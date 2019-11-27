@@ -28,12 +28,11 @@ export interface State {
 }
 
 export const create = (init: Partial<State> = {}): State => {
-  const { left, drawn } = Letter.draw(N_LETTERS);
   return {
     containerDimensions: Dimensions.create(0, 0),
     slate: Slate.create(N_LETTERS),
-    freeLetters: drawn,
-    bag: left,
+    freeLetters: [],
+    bag: [],
     spells: "",
     unspelled: new Set(),
     spelled: new Set(),

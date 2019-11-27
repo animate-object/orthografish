@@ -3,7 +3,7 @@ import "./EndGameModal.css";
 import { Modal } from "./design/Modal";
 import { Button } from "./design/Button";
 import { Effect } from "../types";
-import { newGame } from "../actions";
+import { requestNewGame } from "../actions";
 import { Dispatch } from "redux";
 import { State } from "../state";
 import classNames from "classnames";
@@ -99,7 +99,7 @@ export const EndGameModal = ({
 );
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  onNewGame: () => dispatch(newGame())
+  onNewGame: () => dispatch(requestNewGame())
 });
 
 const mapStateToProps = (state: State): StateProps => ({

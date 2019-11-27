@@ -9,26 +9,29 @@ import {
 } from "@redux-saga/core/effects";
 import {
   ActionTypes,
-  FetchWords,
+  fetchIsSlow,
+  startNewGame,
+  requestNewGameFailed,
+  requestNewGame,
   fetchWords,
   fetchWordsSuccess,
-  fetchWordsFailed,
-  fetchIsSlow
+  fetchWordsFailed
 } from "./actions";
-import { getFreeLetters } from "./selectors";
 import axios from "axios";
+import { Letter, Result } from "./types";
+import { N_LETTERS } from "./state";
 
 const URL = "https://4upb1jruoc.execute-api.us-east-1.amazonaws.com/prod/words";
 
 export function* root() {
-  yield fork(watchFetchWords);
   yield fork(watchNewGame);
-  yield initializeGame();
+  yield put(requestNewGame());
 }
 
-export function* fetchWordsForLetters({ letters }: FetchWords) {
+export function* fetchWordsForLetters(letters: string[]) {
+  yield put(fetchWords());
   const slowLoadTask = yield fork(slowLoadFeedback);
-  let words = [];
+  let words: string[] = [];
   try {
     while (words.length <= 0) {
       const response = yield call(axios.post, URL, {
@@ -36,12 +39,14 @@ export function* fetchWordsForLetters({ letters }: FetchWords) {
       });
       words = response.data.body.result.items;
     }
-    yield cancel(slowLoadTask);
-    yield put(fetchWordsSuccess(words));
+    yield put(fetchWordsSuccess());
+    return Result.success(words);
   } catch (e) {
     console.error(e);
-    yield cancel(slowLoadTask);
     yield put(fetchWordsFailed());
+    return Result.error(e);
+  } finally {
+    yield cancel(slowLoadTask);
   }
 }
 
@@ -51,14 +56,25 @@ export function* slowLoadFeedback() {
 }
 
 export function* initializeGame() {
-  const freeLetters = yield select(getFreeLetters);
-  yield put(fetchWords(freeLetters));
-}
+  const {
+    drawn,
+    left
+  }: { left: Letter.Letter[]; drawn: Letter.Letter[] } = yield call(
+    Letter.draw,
+    N_LETTERS
+  );
+  const wordsResult: Result.Result<string[]> = yield call(
+    fetchWordsForLetters,
+    drawn.map(l => l.alpha)
+  );
 
-export function* watchFetchWords() {
-  yield takeEvery(ActionTypes.FETCH_WORDS, fetchWordsForLetters);
+  if (Result.isSuccess(wordsResult)) {
+    yield put(startNewGame(drawn, left, wordsResult.value));
+  } else {
+    yield put(requestNewGameFailed());
+  }
 }
 
 export function* watchNewGame() {
-  yield takeEvery(ActionTypes.NEW_GAME, initializeGame);
+  yield takeEvery(ActionTypes.REQUEST_NEW_GAME, initializeGame);
 }

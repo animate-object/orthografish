@@ -38,17 +38,21 @@ export const reducer = (state: State = create(), action: Action): State => {
     case ActionTypes.FETCH_WORDS_SUCCESS:
       return {
         ...state,
-        unspelled: new Set(action.words),
-        spelled: new Set(),
-        missed: new Set(),
         fetchState: "Fetched"
       };
     case ActionTypes.FETCH_WORDS_FAILED:
       return { ...state, fetchState: "Errored" };
     case ActionTypes.GIVE_UP:
       return { ...state, hasGivenUp: true };
-    case ActionTypes.NEW_GAME:
+    case ActionTypes.REQUEST_NEW_GAME:
       return create({ containerDimensions: state.containerDimensions });
+    case ActionTypes.START_NEW_GAME:
+      return {
+        ...state,
+        freeLetters: action.drawn,
+        bag: action.bag,
+        unspelled: new Set(action.words)
+      };
     case ActionTypes.SHOW_SPELLED:
       return { ...state, showSpelled: action.show };
     case ActionTypes.SHOW_DEFINITION:

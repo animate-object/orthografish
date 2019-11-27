@@ -8,7 +8,6 @@ import {
   clearSelection,
   chooseTarget,
   giveUp,
-  newGame,
   showSpelled,
   showDefinition,
   clearSlate,
@@ -56,7 +55,6 @@ interface DispatchProps {
   onClearSelection: Effect.Effect0;
   onTargetFreeSpace: Effect.Effect0;
   onGiveUp: Effect.Effect0;
-  onNewGame: Effect.Effect0;
   onShowSpelled: Effect.Effect0;
   onShowDefinition: Effect.Effect0;
   onClearSlate: Effect.Effect0;
@@ -210,7 +208,6 @@ export const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   onTargetFreeSpace: () =>
     dispatch(chooseTarget(Select.target("FreeSpace", "free_space"))),
   onGiveUp: () => dispatch(giveUp()),
-  onNewGame: () => dispatch(newGame()),
   onShowSpelled: () => dispatch(showSpelled(true)),
   onShowDefinition: () => dispatch(showDefinition(true)),
   onClearSlate: () => dispatch(clearSlate()),

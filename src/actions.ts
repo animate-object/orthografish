@@ -11,10 +11,12 @@ export enum ActionTypes {
   FETCH_WORDS_SUCCESS = "FETCH_WORDS_SUCCESS",
   FETCH_WORDS_FAILED = "FETCH_WORDS_FAILED",
   GIVE_UP = "GIVE_UP",
-  NEW_GAME = "NEW_GAME",
   SHOW_SPELLED = "SHOW_SPELLED",
   SHOW_DEFINITION = "SHOW_DEFINITION",
-  SUBMIT_WORD = "SUBMIT_WORD"
+  SUBMIT_WORD = "SUBMIT_WORD",
+  REQUEST_NEW_GAME = "REQUEST_NEW_GAME",
+  REQUEST_NEW_GAME_FAILED = "REQUEST_NEW_GAME_FAILED",
+  START_NEW_GAME = "START_NEW_GAME"
 }
 
 export type Action =
@@ -28,10 +30,12 @@ export type Action =
   | FetchWordsSuccess
   | FetchWordsFailed
   | GiveUp
-  | NewGame
   | ShowSpelled
   | ShowDefinition
-  | SubmitWord;
+  | SubmitWord
+  | RequestNewGame
+  | RequestNewGameFailed
+  | StartNewGame;
 
 export interface SetContainerDimensions {
   type: ActionTypes.SET_CONTAINER_DIMENSIONS;
@@ -58,7 +62,6 @@ export interface ClearSlate {
 
 export interface FetchWords {
   type: ActionTypes.FETCH_WORDS;
-  letters: string;
 }
 
 export interface FetchIsSlow {
@@ -67,7 +70,6 @@ export interface FetchIsSlow {
 
 export interface FetchWordsSuccess {
   type: ActionTypes.FETCH_WORDS_SUCCESS;
-  words: string[];
 }
 
 export interface FetchWordsFailed {
@@ -76,10 +78,6 @@ export interface FetchWordsFailed {
 
 export interface GiveUp {
   type: ActionTypes.GIVE_UP;
-}
-
-export interface NewGame {
-  type: ActionTypes.NEW_GAME;
 }
 
 export interface ShowSpelled {
@@ -94,6 +92,21 @@ export interface ShowDefinition {
 
 export interface SubmitWord {
   type: ActionTypes.SUBMIT_WORD;
+}
+
+export interface RequestNewGame {
+  type: ActionTypes.REQUEST_NEW_GAME;
+}
+
+export interface RequestNewGameFailed {
+  type: ActionTypes.REQUEST_NEW_GAME_FAILED;
+}
+
+export interface StartNewGame {
+  type: ActionTypes.START_NEW_GAME;
+  drawn: Letter.Letter[];
+  bag: Letter.Letter[];
+  words: string[];
 }
 
 export const setContainerDimensions = (
@@ -117,18 +130,16 @@ export const clearSlate = (): ClearSlate => ({ type: ActionTypes.CLEAR_SLATE });
 
 export const clearSelection = () => ({ type: ActionTypes.CLEAR_SELECTION });
 
-export const fetchWords = (letters: Letter.Letter[]): FetchWords => ({
-  type: ActionTypes.FETCH_WORDS,
-  letters: letters.map(l => l.alpha).join("")
+export const fetchWords = (): FetchWords => ({
+  type: ActionTypes.FETCH_WORDS
 });
 
 export const fetchIsSlow = (): FetchIsSlow => ({
   type: ActionTypes.FETCH_IS_SLOW
 });
 
-export const fetchWordsSuccess = (words: string[]): FetchWordsSuccess => ({
-  type: ActionTypes.FETCH_WORDS_SUCCESS,
-  words
+export const fetchWordsSuccess = (): FetchWordsSuccess => ({
+  type: ActionTypes.FETCH_WORDS_SUCCESS
 });
 
 export const fetchWordsFailed = (): FetchWordsFailed => ({
@@ -136,8 +147,6 @@ export const fetchWordsFailed = (): FetchWordsFailed => ({
 });
 
 export const giveUp = (): GiveUp => ({ type: ActionTypes.GIVE_UP });
-
-export const newGame = (): NewGame => ({ type: ActionTypes.NEW_GAME });
 
 export const showSpelled = (show: boolean): ShowSpelled => ({
   type: ActionTypes.SHOW_SPELLED,
@@ -150,3 +159,22 @@ export const showDefinition = (show: boolean): ShowDefinition => ({
 });
 
 export const submitWord = (): SubmitWord => ({ type: ActionTypes.SUBMIT_WORD });
+
+export const requestNewGame = (): RequestNewGame => ({
+  type: ActionTypes.REQUEST_NEW_GAME
+});
+
+export const startNewGame = (
+  drawn: Letter.Letter[],
+  bag: Letter.Letter[],
+  words: string[]
+): StartNewGame => ({
+  type: ActionTypes.START_NEW_GAME,
+  drawn,
+  bag,
+  words
+});
+
+export const requestNewGameFailed = (): RequestNewGameFailed => ({
+  type: ActionTypes.REQUEST_NEW_GAME_FAILED
+});
