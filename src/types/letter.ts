@@ -84,7 +84,26 @@ export const scoreWord = (letters: string): number => {
     }, 0);
 };
 
-const VOWELS: Alpha[] = [Alpha.A, Alpha.E, Alpha.I, Alpha.O, Alpha.U, Alpha.Y];
+const VOWELS: Alpha[] = [
+  Alpha.A,
+  Alpha.A,
+  Alpha.A,
+  Alpha.A,
+  Alpha.E,
+  Alpha.E,
+  Alpha.E,
+  Alpha.E,
+  Alpha.I,
+  Alpha.I,
+  Alpha.I,
+  Alpha.I,
+  Alpha.O,
+  Alpha.O,
+  Alpha.O,
+  Alpha.U,
+  Alpha.U,
+  Alpha.Y
+];
 
 // eslint-disable-next-line
 const _CLASSIC_COUNTS: Record<Alpha, number> = {
