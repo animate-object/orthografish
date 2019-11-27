@@ -7,16 +7,10 @@
   align-items: center;
 }
 
-.PageHeader {
+.ActionBar {
   width: 100%;
   flex-shrink: 1;
-  height: 1.5rem;
-}
-
-.PageFooter {
-  width: 100%;
-  flex-shrink: 1;
-  height: 1.5rem;
+  height: 2rem;
 }
 
 .PageContent {
@@ -25,4 +19,5 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100%;
 }

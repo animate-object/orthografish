@@ -9,8 +9,8 @@ interface Props {
 
 export const Page = ({ header, footer, children }: Props) => (
   <div className="Page">
-    <div className="PageHeader">{header}</div>
+    <div className="ActionBar">{header}</div>
     <div className="PageContent">{children}</div>
-    <div className="PageFooter">{footer}</div>
+    <div className="ActionBar">{footer}</div>
   </div>
 );
