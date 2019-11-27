@@ -25,7 +25,7 @@ Should support an options menu -- app is getting crowded, so some navigation opt
 
 Options to support
 
-- number of letters (could invalidate stored games)
+- number of letters (could invalidate stored games487\*)
 - storage config
 
 ## Bugs
