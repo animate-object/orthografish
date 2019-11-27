@@ -16,12 +16,12 @@
 
 .Title {
   font-weight: 900;
-  font-size: 2rem;
+  font-size: var(--font-lg);
   padding-bottom: 0.25rem;
 }
 
 .Content {
-  font-size: 1.5rem;
+  font-size: var(--font-md);
   position: relative;
   flex-grow: 1;
   overflow: auto;

@@ -1,5 +1,5 @@
 .Spells {
-  font-size: 3rem;
+  font-size: var(--font-xl);
   height: 4rem;
 }
 
