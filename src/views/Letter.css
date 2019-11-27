@@ -16,12 +16,10 @@
 
 .Letter.Selected {
   border: 2px solid var(--cyan);
-  margin: 0;
 }
 
 .Letter.Targetable {
   border: 2px solid var(--red);
-  margin: 0;
 }
 
 .Letter:hover {

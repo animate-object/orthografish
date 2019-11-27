@@ -3,6 +3,6 @@
   padding-bottom: 1rem;
 }
 
-.FreeSpace > .Letter {
+.FreeSpace > .Letter:not(.Selected):not(.Targetable) {
   margin: 2px;
 }
