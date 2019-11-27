@@ -151,6 +151,10 @@ export const BAG: Array<Alpha> = Object.keys(_CHALLENGE_COUNTS)
     return [...acc, ...new Array(_CHALLENGE_COUNTS[l]).fill(l)];
   }, []);
 
+export interface DrawResult {
+  left: Letter[];
+  drawn: Letter[];
+}
 export const draw = (n: number): { left: Letter[]; drawn: Letter[] } => {
   const vowel = VOWELS[Math.floor(Math.random() * VOWELS.length)];
   const firstVowel = BAG.findIndex(l => l === vowel);
@@ -179,3 +183,6 @@ export const draw = (n: number): { left: Letter[]; drawn: Letter[] } => {
 
 export const sort = (a: Letter, b: Letter): number =>
   a.alpha > b.alpha ? 1 : -1;
+
+export const toString = (...letters: Letter[]): string =>
+  letters.map(l => l.alpha).join("");

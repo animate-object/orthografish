@@ -27,7 +27,7 @@ export function* root() {
   yield put(requestNewGame());
 }
 
-export function* fetchWordsForLetters(letters: string[]) {
+export function* fetchWordsForLetters(letters: string) {
   yield put(fetchWords());
   const slowLoadTask = yield fork(slowLoadFeedback);
   let words: string[] = [];
@@ -55,17 +55,11 @@ export function* slowLoadFeedback() {
 }
 
 export function* initializeGame() {
-  const {
-    drawn,
-    left
-  }: { left: Letter.Letter[]; drawn: Letter.Letter[] } = yield call(
-    Letter.draw,
-    N_LETTERS
-  );
+  const { drawn, left }: Letter.DrawResult = yield call(Letter.draw, N_LETTERS);
 
   const wordsResult: Result.Result<string[]> = yield call(
     fetchWordsForLetters,
-    drawn.map(l => l.alpha)
+    Letter.toString(...drawn)
   );
 
   if (Result.isSuccess(wordsResult)) {
