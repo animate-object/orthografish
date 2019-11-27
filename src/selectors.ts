@@ -1,13 +1,17 @@
 import { State } from "./state";
 import { createSelector } from "reselect";
 import { Dimensions, Select, Letter, ArrayUtils } from "./types";
-import { BAG } from "./types/letter";
 
 const getState = (state: State) => state;
 
-export const getLettersOnTheBoard = createSelector(
+export const getFreeLetters = createSelector(
   getState,
-  state => BAG.length - state.bag.length
+  state => state.freeLetters
+);
+
+export const getLettersOnTheBoard = createSelector(
+  getFreeLetters,
+  letters => letters.length
 );
 
 export const getContainerDimensions = createSelector(
@@ -20,11 +24,6 @@ export const getLetterDimensions = createSelector(
   getLettersOnTheBoard,
   (containerDimensions, letterCount) =>
     Dimensions.square(containerDimensions.width / (letterCount + 1))
-);
-
-export const getFreeLetters = createSelector(
-  getState,
-  state => state.freeLetters
 );
 
 export const getSpellState = createSelector(

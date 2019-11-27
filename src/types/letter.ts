@@ -186,3 +186,5 @@ export const sort = (a: Letter, b: Letter): number =>
 
 export const toString = (...letters: Letter[]): string =>
   letters.map(l => l.alpha).join("");
+
+export const fromString = (str: string): Letter[] => str.split("").map(create);
