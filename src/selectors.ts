@@ -16,8 +16,8 @@ export const getContainerDimensions = createSelector(
 
 export const getLetterDimensions = createSelector(
   getContainerDimensions,
-  containerDimensions =>
-    Dimensions.square(containerDimensions.width / (N_LETTERS + 1))
+  ({ width, height }) =>
+    Dimensions.square(Math.min(width, height) / (N_LETTERS + 1))
 );
 
 export const getSpellState = createSelector(

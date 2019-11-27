@@ -1,6 +1,8 @@
 .Spells {
   font-size: var(--font-xl);
-  height: 4rem;
+  height: var(--font-xl);
+  line-height: 1;
+  padding: 1rem 0;
 }
 
 .NewScore {
