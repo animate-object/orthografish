@@ -1,17 +1,18 @@
 .Slot {
   box-shadow: inset 0 0 3px var(--black);
   border-radius: 2px;
+}
+
+.Slot:not(.Selected):not(.Targetable) {
   margin: 2px;
 }
 
 .Slot.Selected {
   border: 2px solid var(--cyan);
-  margin: 0;
 }
 
 .Slot.Targetable {
   border: 2px solid var(--red);
-  margin: 0;
 }
 
 .Slot.Occupied {
