@@ -1,6 +1,13 @@
 import { Action, ActionTypes } from "./actions";
 import { State, create, N_LETTERS } from "./state";
-import { Select, UUID, Slate, Result, Maybe, ArrayUtils } from "./types";
+import {
+  Select,
+  UUID,
+  Slate,
+  Result,
+  Maybe,
+  ArrayUtils
+} from "../common/types";
 
 export const reducer = (state: State = create(), action: Action): State => {
   console.log(action);

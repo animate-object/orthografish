@@ -1,8 +1,7 @@
 import React from "react";
 import "./EndGameModal.css";
-import { Modal } from "./design/Modal";
-import { Button } from "./design/Button";
-import { Effect } from "../types";
+import { Modal, Emoji, Button } from "../../common/design";
+import { Effect } from "../../common/types";
 import { requestNewGame } from "../actions";
 import { Dispatch } from "redux";
 import { State } from "../state";
@@ -16,7 +15,6 @@ import {
   getMissed
 } from "../selectors";
 import { connect } from "react-redux";
-import { Emoji } from "./design/Emoji";
 
 interface StateProps {
   words: Array<WordAndSpelled>;
@@ -110,7 +108,4 @@ const mapStateToProps = (state: State): StateProps => ({
   missed: getMissed(state)
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EndGameModal);
+export default connect(mapStateToProps, mapDispatchToProps)(EndGameModal);

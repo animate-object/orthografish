@@ -1,7 +1,7 @@
 import React from "react";
 import { SpellState } from "../state";
 import classNames from "classnames";
-import { Maybe } from "../types";
+import { Maybe } from "../../common/types";
 import "./GameInfo.css";
 
 interface Props {

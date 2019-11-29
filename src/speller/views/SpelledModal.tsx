@@ -1,7 +1,6 @@
 import React from "react";
-import { Modal } from "./design/Modal";
-import { Button } from "./design/Button";
-import { Effect, ArrayUtils } from "../types";
+import { Modal, Button, Emoji } from "../../common/design";
+import { Effect, ArrayUtils } from "../../common/types";
 import { connect } from "react-redux";
 import {
   getSpelled,
@@ -13,7 +12,6 @@ import { Dispatch } from "redux";
 import { showSpelled } from "../actions";
 import { State } from "../state";
 import "./SpelledModal.css";
-import { Emoji } from "./design/Emoji";
 
 interface StateProps {
   spelled: string[];
@@ -88,7 +86,4 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   onClose: () => dispatch(showSpelled(false))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SpelledModal);
+export default connect(mapStateToProps, mapDispatchToProps)(SpelledModal);

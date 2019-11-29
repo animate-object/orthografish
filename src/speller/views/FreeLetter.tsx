@@ -1,5 +1,11 @@
 import * as React from "react";
-import { UUID, Maybe, Letter as LetterType, Effect, Select } from "../types";
+import {
+  UUID,
+  Maybe,
+  Letter as LetterType,
+  Effect,
+  Select
+} from "../../common/types";
 import { State } from "../state";
 import { getSelectedId, getValidTargetTypes } from "../selectors";
 import { connect } from "react-redux";
@@ -51,7 +57,4 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   onTarget: id => dispatch(chooseTarget(Select.target("FreeLetter", id)))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FreeLetter);
+export default connect(mapStateToProps, mapDispatchToProps)(FreeLetter);

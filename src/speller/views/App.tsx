@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Dimensions, Maybe, Effect, Select } from "../types";
+import { Dimensions, Maybe, Effect, Select } from "../../common/types";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import {
@@ -13,7 +13,7 @@ import {
   clearSlate,
   submitWord
 } from "../actions";
-import { Letter as LetterType } from "../types";
+import { Letter as LetterType } from "../../common/types";
 import * as _ from "lodash";
 import { State, SpellState } from "../state";
 import {
@@ -29,14 +29,11 @@ import {
   getCanSpell
 } from "../selectors";
 import Slate from "./Slate";
-import { Button } from "./design/Button";
+import { Button, Emoji, Page, Actions } from "../../common/design";
 import LoadingScreen from "./LoadingScreen";
-import { Emoji } from "./design/Emoji";
 import { FreeSpace } from "./FreeSpace";
 import { GameInfo } from "./GameInfo";
-import { Actions } from "./design/Actions";
 import { Modals } from "./Modals";
-import { Page } from "./design/Page";
 
 interface StateProps {
   freeLetters: LetterType.Letter[];
@@ -227,7 +224,4 @@ export const mapStateToProps = (state: State): StateProps => ({
   canSpell: getCanSpell(state)
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

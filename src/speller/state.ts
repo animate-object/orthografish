@@ -1,5 +1,4 @@
-import { Dimensions, Letter, Select } from "./types";
-import { Slate } from "./types";
+import { Slate, Dimensions, Letter, Select } from "../common/types";
 
 export const N_LETTERS = 6;
 export type FetchState =

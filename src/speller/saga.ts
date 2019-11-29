@@ -17,7 +17,7 @@ import {
   fetchWordsFailed
 } from "./actions";
 import axios from "axios";
-import { Letter, Result } from "./types";
+import { Letter, Result } from "../common/types";
 import { N_LETTERS } from "./state";
 
 const URL = "https://4upb1jruoc.execute-api.us-east-1.amazonaws.com/prod/words";

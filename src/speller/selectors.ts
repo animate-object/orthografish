@@ -1,6 +1,6 @@
 import { State, N_LETTERS } from "./state";
 import { createSelector } from "reselect";
-import { Dimensions, Select, Letter, ArrayUtils } from "./types";
+import { Dimensions, Select, Letter, ArrayUtils } from "../common/types";
 
 const getState = (state: State) => state;
 
@@ -25,34 +25,24 @@ export const getSpellState = createSelector(
   state => state.spellState
 );
 
-export const getSlate = createSelector(
-  getState,
-  state => state.slate
+export const getSlate = createSelector(getState, state => state.slate);
+
+export const getSelected = createSelector(getState, state => state.selected);
+
+export const getSelectedId = createSelector(getSelected, selected =>
+  selected ? selected.id : undefined
 );
 
-export const getSelected = createSelector(
-  getState,
-  state => state.selected
+export const getSpelled = createSelector(getState, state =>
+  Array.from(state.spelled)
 );
 
-export const getSelectedId = createSelector(
-  getSelected,
-  selected => (selected ? selected.id : undefined)
+export const getUnspelled = createSelector(getState, state =>
+  Array.from(state.unspelled)
 );
 
-export const getSpelled = createSelector(
-  getState,
-  state => Array.from(state.spelled)
-);
-
-export const getUnspelled = createSelector(
-  getState,
-  state => Array.from(state.unspelled)
-);
-
-export const getMissed = createSelector(
-  getState,
-  state => Array.from(state.missed)
+export const getMissed = createSelector(getState, state =>
+  Array.from(state.missed)
 );
 
 export const getSpelledCount = createSelector(
@@ -65,10 +55,7 @@ export const getUnspelledCount = createSelector(
   unspelled => unspelled.length
 );
 
-export const getCurrentWord = createSelector(
-  getState,
-  state => state.spells
-);
+export const getCurrentWord = createSelector(getState, state => state.spells);
 
 export const getCurrentWordIsValid = createSelector(
   getCurrentWord,
@@ -98,15 +85,9 @@ export const getValidTargetTypes = createSelector(
   }
 );
 
-export const getSpells = createSelector(
-  getState,
-  state => state.spells
-);
+export const getSpells = createSelector(getState, state => state.spells);
 
-export const getGaveUp = createSelector(
-  getState,
-  state => state.hasGivenUp
-);
+export const getGaveUp = createSelector(getState, state => state.hasGivenUp);
 
 export type WordAndSpelled = [string, boolean];
 const wordAndSpelled = (word: string, spelled: boolean): WordAndSpelled => [
@@ -137,16 +118,14 @@ export const getEndGameWords = createSelector(
   }
 );
 
-export const getHints = createSelector(
-  getUnspelled,
-  unspelled =>
-    unspelled.reduce(
-      (acc: Record<number, number>, cur: string) => ({
-        ...acc,
-        [cur.length]: (acc[cur.length] || 0) + 1
-      }),
-      {}
-    )
+export const getHints = createSelector(getUnspelled, unspelled =>
+  unspelled.reduce(
+    (acc: Record<number, number>, cur: string) => ({
+      ...acc,
+      [cur.length]: (acc[cur.length] || 0) + 1
+    }),
+    {}
+  )
 );
 
 export const getShowSpelled = createSelector(

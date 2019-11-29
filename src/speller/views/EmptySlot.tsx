@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Dimensions, Handler, Effect } from "../types";
+import { Dimensions, Handler, Effect } from "../../common/types";
 import { State } from "../state";
 import { getLetterDimensions } from "../selectors";
 

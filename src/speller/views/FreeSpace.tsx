@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrayUtils, Letter } from "../types";
+import { ArrayUtils, Letter } from "../../common/types";
 import FreeLetter from "./FreeLetter";
 import "./FreeSpace.css";
 

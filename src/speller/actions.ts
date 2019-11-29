@@ -1,4 +1,4 @@
-import { Dimensions, Select, Letter } from "./types";
+import { Dimensions, Select, Letter } from "../common/types";
 
 export enum ActionTypes {
   SET_CONTAINER_DIMENSIONS = "SET_CONTAINER_DIMENSIONS",

@@ -1,6 +1,10 @@
-import { Dimensions, Effect, Handler } from "../types";
+import {
+  Dimensions,
+  Effect,
+  Handler,
+  Letter as LetterType
+} from "../../common/types";
 import * as React from "react";
-import { Letter as LetterType } from "../types";
 import { connect } from "react-redux";
 import { State } from "../state";
 import { getLetterDimensions } from "../selectors";

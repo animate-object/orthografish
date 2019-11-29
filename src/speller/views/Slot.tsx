@@ -1,5 +1,5 @@
 import React from "react";
-import { Letter as LetterType, Maybe, Effect } from "../types";
+import { Letter as LetterType, Maybe, Effect } from "../../common/types";
 import Letter from "./Letter";
 import classNames from "classnames";
 import EmptySlot from "./EmptySlot";

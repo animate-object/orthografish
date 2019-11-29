@@ -1,17 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./views/App";
-import { Provider } from "react-redux";
-import { store } from "./store";
 import "./index.css";
-import * as selectors from "./selectors";
+import { SpellerApp } from "./speller";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <>
+    <SpellerApp />
+  </>,
   document.getElementById("root")
 );
-
-(window as any).selectors = selectors;
-(window as any).store = store;

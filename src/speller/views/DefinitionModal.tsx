@@ -1,12 +1,11 @@
 import React from "react";
-import { Modal } from "./design/Modal";
+import { Modal, Button } from "../../common/design";
 import { State } from "../state";
 import { getCurrentWord, getShouldShowDefinition } from "../selectors";
 import { Dispatch } from "redux";
 import { showDefinition } from "../actions";
-import { Effect } from "../types";
+import { Effect } from "../../common/types";
 import { connect } from "react-redux";
-import { Button } from "./design/Button";
 import "./DefinitionModal.css";
 
 interface StateProps {

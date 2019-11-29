@@ -1,7 +1,13 @@
 import React from "react";
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import { Slate as SlateType, Select, Effect, UUID, Dimensions } from "../types";
+import {
+  Slate as SlateType,
+  Select,
+  Effect,
+  UUID,
+  Dimensions
+} from "../../common/types";
 import { State } from "../state";
 import {
   getSlate,
@@ -74,7 +80,4 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   onClearSelection: () => dispatch(clearSelection())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Slate);
+export default connect(mapStateToProps, mapDispatchToProps)(Slate);
