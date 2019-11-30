@@ -10,9 +10,9 @@ interface Props {
 
 export const Actions = ({ right, middle, left, children }: Props) => (
   <div className="Actions">
-    <div className="Right">{right}</div>
-    <div className="Middle">{middle}</div>
     <div className="Left">{left}</div>
+    <div className="Middle">{middle}</div>
+    <div className="Right">{right}</div>
     {children}
   </div>
 );

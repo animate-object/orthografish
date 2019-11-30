@@ -13,3 +13,6 @@ export const sorted = <T>(
 
 export const nonNull = <T>(array: Array<Maybe.Maybe<T>>): Array<T> =>
   array.filter(t => t != null) as Array<T>;
+
+export const randomItem = <T>(array: Array<T>): T =>
+  array[Math.floor(Math.random() * array.length)];

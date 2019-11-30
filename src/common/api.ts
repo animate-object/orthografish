@@ -8,9 +8,12 @@ export const wordsStartingWith = (
 ): Promise<string[]> => {
   return axios
     .post(URL, {
-      startsWith: prefix,
-      minLength: wordLength,
-      maxLength: wordLength
+      queryType: "startsWith",
+      query: {
+        startsWith: prefix,
+        minLength: wordLength,
+        maxLength: wordLength
+      }
     })
     .then(response => response.data.body.result.items);
 };
@@ -21,10 +24,13 @@ export const wordPrefixes = (
 ): Promise<Record<string, number>> => {
   return axios
     .post(URL, {
-      minLength: wordLength,
-      maxLength: wordLength,
-      start: 0,
-      end: prefixLength
+      queryType: "matchSubstring",
+      query: {
+        minLength: wordLength,
+        maxLength: wordLength,
+        start: 0,
+        end: prefixLength
+      }
     })
-    .then(response => response.data.body.result.data);
+    .then(response => response.data.body.result.items);
 };

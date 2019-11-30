@@ -1,0 +1,5 @@
+.Header {
+  font: var(--sans-serif);
+  font-size: var(--font-md);
+  font-weight: bold;
+}
