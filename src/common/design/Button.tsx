@@ -3,12 +3,14 @@ import "./Button.css";
 import classNames from "classnames";
 
 interface Props {
-  buttonType?: "Default" | "Secondary";
+  buttonType?: "Default" | "Secondary" | "Accent";
+  size?: "Small" | "Normal";
 }
 
 export const Button = ({
   buttonType,
   className,
+  size,
   ...rest
 }: Props &
   React.DetailedHTMLProps<
@@ -17,7 +19,9 @@ export const Button = ({
   >) => (
   <button
     className={classNames("Button", className, {
-      Secondary: buttonType === "Secondary"
+      Secondary: buttonType === "Secondary",
+      Accent: buttonType === "Accent",
+      Small: size === "Small"
     })}
     {...rest}
   />

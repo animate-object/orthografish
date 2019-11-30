@@ -28,9 +28,9 @@ export const LearnerHeader = ({
     starting with ${prefix || "..."}`}
     {spelledCount > 0 && (
       <div>
-        <a className="SpelledButton" onClick={onShowSpelled}>
+        <Button size="Small" buttonType="Accent" onClick={onShowSpelled}>
           You've spelled {spelledCount}
-        </a>
+        </Button>
       </div>
     )}
   </Header>

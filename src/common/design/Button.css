@@ -12,6 +12,14 @@
   background-color: var(--gray);
 }
 
+.Button.Accent {
+  background-color: var(--white);
+  color: var(--blue);
+}
 .Button:disabled {
   opacity: 0.5;
+}
+
+.Button.Small {
+  font-size: var(--font-sm);
 }
