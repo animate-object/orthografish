@@ -28,6 +28,10 @@ export const getSpelled = createSelector(getState, state =>
   Array.from(state.spelled)
 );
 
+export const getMissed = createSelector(getState, state =>
+  Array.from(state.missed)
+);
+
 export const getUnspelledCount = createSelector(
   getUnspelled,
   unspelled => unspelled.length
@@ -36,6 +40,11 @@ export const getUnspelledCount = createSelector(
 export const getSpelledCount = createSelector(
   getSpelled,
   spelled => spelled.length
+);
+
+export const getMIssedCount = createSelector(
+  getMissed,
+  missed => missed.length
 );
 
 export const getSpellState = createSelector(
@@ -52,4 +61,12 @@ export const getCanSpell = createSelector(
   getBlankValue,
   getBlankValueLength,
   (value, length) => value.length === length
+);
+
+export const getGameEnded = createSelector(getState, state => state.gameOver);
+
+export const getGaveUp = createSelector(
+  getUnspelledCount,
+  getGameEnded,
+  (unspelledCount, gameEnded) => gameEnded && unspelledCount !== 0
 );

@@ -19,6 +19,7 @@ export interface State {
   prefixParams: PrefixParams;
   blankValue: string;
   prefix?: string;
+  gameOver: boolean;
 }
 
 export const create = (init: Partial<State> = {}): State => ({
@@ -28,6 +29,7 @@ export const create = (init: Partial<State> = {}): State => ({
   spellState: "Spelling",
   blankValue: "",
   prefixParams: DEFAULT_PREFIX_PARAMS,
+  gameOver: false,
   ...init
 });
 
@@ -36,10 +38,15 @@ export const startNewGame = (
   prefix: string,
   words: string[]
 ): State => ({
-  ...state,
-  unspelled: new Set(words),
-  prefix: prefix
+  ...create({
+    unspelled: new Set(words),
+    prefix: prefix,
+    gameOver: false,
+    prefixParams: state.prefixParams
+  })
 });
+
+export const endGame = (state: State) => ({ ...state, gameOver: true });
 
 export const changeInput = (state: State, newValue: string): State => {
   const maxBlankLength =
@@ -66,27 +73,21 @@ export const spell = (state: State): State => {
     ? "Previous"
     : "Incorrect";
 
+  const updated = { ...state, spellState, lastSpelled: word };
+
   switch (spellState) {
     case "Correct":
       return {
-        ...state,
+        ...updated,
         unspelled: newSetWithoutEntry(state.unspelled, word),
-        spelled: newSetWithEntry(state.spelled, word),
-        lastSpelled: word,
-        spellState
+        spelled: newSetWithEntry(state.spelled, word)
       };
     case "Previous":
-      return {
-        ...state,
-        lastSpelled: word,
-        spellState
-      };
+      return updated;
     case "Incorrect":
       return {
-        ...state,
-        missed: newSetWithEntry(state.missed, word),
-        lastSpelled: word,
-        spellState
+        ...updated,
+        missed: newSetWithEntry(state.missed, word)
       };
   }
 };

@@ -4,10 +4,16 @@ export enum ActionTypes {
   REQUEST_NEW_GAME = "REQUEST_NEW_GAME",
   START_NEW_GAME = "START_NEW_GAME",
   SPELL = "SPELL",
-  CHANGE_INPUT = "CHANGE_INPUT"
+  CHANGE_INPUT = "CHANGE_INPUT",
+  END_GAME = "END_GAME"
 }
 
-export type Action = RequestNewGame | StartNewGame | Spell | ChangeInput;
+export type Action =
+  | RequestNewGame
+  | StartNewGame
+  | Spell
+  | ChangeInput
+  | EndGame;
 
 export interface RequestNewGame {
   type: ActionTypes.REQUEST_NEW_GAME;
@@ -26,6 +32,10 @@ export interface Spell {
 export interface ChangeInput {
   type: ActionTypes.CHANGE_INPUT;
   newValue: string;
+}
+
+export interface EndGame {
+  type: ActionTypes.END_GAME;
 }
 
 export const requestNewGame = (): RequestNewGame => ({
@@ -49,3 +59,5 @@ export const changeInput = (newValue: string): ChangeInput => ({
   type: ActionTypes.CHANGE_INPUT,
   newValue
 });
+
+export const endGame = (): EndGame => ({ type: ActionTypes.END_GAME });
