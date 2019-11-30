@@ -1,0 +1,15 @@
+.FillTheBlank,
+.FillTheBlank > * {
+  font-family: var(--fixed);
+  font-size: 4rem;
+}
+
+.FillTheBlankInput {
+  background: none;
+  border: none;
+  outline: none;
+  border-bottom: 3px solid var(--white);
+  color: var(--white);
+  font-family: var(--fixed);
+  text-transform: lowercase;
+}

@@ -1,46 +1,56 @@
 import React from "react";
 import { Button, Page, Actions } from "../../common/design";
 import { State, PrefixParams } from "../state";
-import { getPrefix, getPrefixParams } from "../selectors";
+import { getPrefix, getPrefixParams, getBlankValue } from "../selectors";
 import { connect } from "react-redux";
 import "./App.css";
-import { Header } from "../../common/design/Header";
+import { LearnerHeader } from "./LearnerHeader";
+import { FillTheBlank } from "./FillTheBlank";
+import { Effect } from "../../common/types";
+import { Dispatch } from "redux";
+import { changeInput } from "../actions";
 
 interface StateProps {
   prefix?: string;
   prefixParams: PrefixParams;
+  blankValue: string;
 }
 
-interface DispatchProps {}
+interface DispatchProps {
+  onChangeBlankValue: Effect.Effect<string>;
+}
 
 type Props = StateProps & DispatchProps;
 
 export class App extends React.PureComponent<Props> {
-  private inputRef: React.RefObject<HTMLInputElement> = React.createRef();
-
   public constructor(props: Props) {
     super(props);
   }
 
   public render() {
-    const { prefix, prefixParams } = this.props;
+    const { prefix, prefixParams, blankValue, onChangeBlankValue } = this.props;
 
     return (
-      <div className="App">
+      <div className="LearnerApp">
         <Page
           footer={<Actions left={<Button>Spell</Button>} />}
           header={
-            <Header>
-              {`${
-                prefixParams.wordLength
-              } letter words starting with ${prefix || "..."}`}
-            </Header>
+            <LearnerHeader
+              prefix={prefix}
+              wordLength={prefixParams.wordLength}
+            />
           }
         >
-          <div>
-            <span>{prefix}</span>
-            <input ref={this.inputRef} />
-          </div>
+          {prefix ? (
+            <FillTheBlank
+              prefix={prefix}
+              wordLength={prefixParams.wordLength}
+              blankValue={blankValue}
+              onChange={onChangeBlankValue}
+            />
+          ) : (
+            "Loading . . ."
+          )}
         </Page>
       </div>
     );
@@ -49,7 +59,12 @@ export class App extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: State): StateProps => ({
   prefix: getPrefix(state),
-  prefixParams: getPrefixParams(state)
+  prefixParams: getPrefixParams(state),
+  blankValue: getBlankValue(state)
 });
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
+  onChangeBlankValue: value => dispatch(changeInput(value))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
