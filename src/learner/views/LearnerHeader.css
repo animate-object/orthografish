@@ -1,3 +1,9 @@
 .LeftToSpell {
   color: var(--green);
 }
+
+.SpelledButton {
+  font-size: var(--font-sm);
+  color: var(--blue);
+  text-decoration: underline;
+}

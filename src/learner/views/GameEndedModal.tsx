@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Actions, Button } from "../../common/design";
+import { Actions, Button } from "../../common/design";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { State } from "../state";
@@ -15,6 +15,8 @@ import { Effect, ArrayUtils } from "../../common/types";
 import { requestNewGame } from "../actions";
 import "./GameEndedModal.css";
 import classNames from "classnames";
+import { LearnerModal } from "./LearnerModal";
+import { WordList } from "./WordList";
 
 interface StateProps {
   gameEnded: boolean;
@@ -40,8 +42,7 @@ export const GameEndedModal = ({
   rating,
   onNewGame
 }: Props): JSX.Element => (
-  <Modal
-    classes={["GameEndedModal"]}
+  <LearnerModal
     title={gaveUp ? "You gave up!" : "You won!"}
     visible={gameEnded}
     actions={
@@ -90,15 +91,7 @@ export const GameEndedModal = ({
         </div>
       </div>
     )}
-  </Modal>
-);
-
-const WordList = (props: { words: string[] }): JSX.Element => (
-  <>
-    {ArrayUtils.sorted(props.words).map(word => (
-      <div key={word}>{word}</div>
-    ))}
-  </>
+  </LearnerModal>
 );
 
 export const mapStateToProps = (state: State): StateProps => ({

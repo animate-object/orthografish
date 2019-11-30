@@ -4,7 +4,8 @@ import {
   changeInput,
   spell,
   startNewGame,
-  endGame
+  endGame,
+  showSpelled
 } from "./state";
 import { Action, ActionTypes } from "./actions";
 
@@ -18,6 +19,8 @@ export const reducer = (state: State = create(), action: Action): State => {
       return spell(state);
     case ActionTypes.END_GAME:
       return endGame(state);
+    case ActionTypes.SHOW_SPELLED:
+      return showSpelled(state, action.show);
     default:
       return state;
   }

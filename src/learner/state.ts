@@ -56,6 +56,7 @@ export interface State {
   blankValue: string;
   prefix?: string;
   gameOver: boolean;
+  showSpelled: boolean;
 }
 
 export const create = (init: Partial<State> = {}): State => ({
@@ -66,6 +67,7 @@ export const create = (init: Partial<State> = {}): State => ({
   blankValue: "",
   prefixParams: defaultPrefixparams(),
   gameOver: false,
+  showSpelled: false,
   ...init
 });
 
@@ -83,6 +85,11 @@ export const startNewGame = (
 });
 
 export const endGame = (state: State) => ({ ...state, gameOver: true });
+
+export const showSpelled = (state: State, show: boolean) => ({
+  ...state,
+  showSpelled: show
+});
 
 export const changeInput = (state: State, newValue: string): State => {
   const maxBlankLength =

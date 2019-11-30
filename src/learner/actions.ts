@@ -3,7 +3,8 @@ export enum ActionTypes {
   START_NEW_GAME = "START_NEW_GAME",
   SPELL = "SPELL",
   CHANGE_INPUT = "CHANGE_INPUT",
-  END_GAME = "END_GAME"
+  END_GAME = "END_GAME",
+  SHOW_SPELLED = "SHOW_SPELLED"
 }
 
 export type Action =
@@ -11,7 +12,8 @@ export type Action =
   | StartNewGame
   | Spell
   | ChangeInput
-  | EndGame;
+  | EndGame
+  | ShowSpelled;
 
 export interface RequestNewGame {
   type: ActionTypes.REQUEST_NEW_GAME;
@@ -34,6 +36,11 @@ export interface ChangeInput {
 
 export interface EndGame {
   type: ActionTypes.END_GAME;
+}
+
+export interface ShowSpelled {
+  type: ActionTypes.SHOW_SPELLED;
+  show: boolean;
 }
 
 export const requestNewGame = (): RequestNewGame => ({
@@ -59,3 +66,8 @@ export const changeInput = (newValue: string): ChangeInput => ({
 });
 
 export const endGame = (): EndGame => ({ type: ActionTypes.END_GAME });
+
+export const showSpelled = (show: boolean): ShowSpelled => ({
+  type: ActionTypes.SHOW_SPELLED,
+  show
+});

@@ -65,6 +65,11 @@ export const getCanSpell = createSelector(
 
 export const getGameEnded = createSelector(getState, state => state.gameOver);
 
+export const getShowSpelled = createSelector(
+  getState,
+  state => state.showSpelled
+);
+
 export const getGaveUp = createSelector(
   getUnspelledCount,
   getGameEnded,

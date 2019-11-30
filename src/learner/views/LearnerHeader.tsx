@@ -1,17 +1,23 @@
 import React from "react";
 import { Header } from "../../common/design/Header";
 import "./LearnerHeader.css";
+import { Effect } from "../../common/types";
+import { Button } from "../../common/design";
 
 interface Props {
   prefix?: string;
   wordLength: number;
   unspelledCount: number;
+  spelledCount: number;
+  onShowSpelled: Effect.Effect0;
 }
 
 export const LearnerHeader = ({
   prefix,
   wordLength,
-  unspelledCount
+  unspelledCount,
+  spelledCount,
+  onShowSpelled
 }: Props): JSX.Element => (
   <Header>
     There {unspelledCount === 1 ? "is" : "are"}{" "}
@@ -20,5 +26,12 @@ export const LearnerHeader = ({
     </span>{" "}
     {`more ${wordLength} letter ${unspelledCount === 1 ? "word" : "words"}
     starting with ${prefix || "..."}`}
+    {spelledCount > 0 && (
+      <div>
+        <a className="SpelledButton" onClick={onShowSpelled}>
+          You've spelled {spelledCount}
+        </a>
+      </div>
+    )}
   </Header>
 );

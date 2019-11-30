@@ -3,14 +3,20 @@ import "./Modal.css";
 import { Actions } from "./Actions";
 import classNames from "classnames";
 
-interface Props {
+export interface ModalProps {
   title: React.ReactNode;
   actions?: React.ReactNode;
   classes?: string[];
   children: React.ReactNode;
   visible: boolean;
 }
-export const Modal = ({ children, visible, title, actions, classes }: Props) =>
+export const Modal = ({
+  children,
+  visible,
+  title,
+  actions,
+  classes
+}: ModalProps) =>
   visible ? (
     <div className={classNames("Modal", classes)}>
       <div className="Title">{title}</div>

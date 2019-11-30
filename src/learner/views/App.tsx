@@ -8,7 +8,8 @@ import {
   getUnspelledCount,
   getLastSpelled,
   getSpellState,
-  getCanSpell
+  getCanSpell,
+  getSpelledCount
 } from "../selectors";
 import { connect } from "react-redux";
 import "./App.css";
@@ -19,12 +20,15 @@ import { Dispatch } from "redux";
 import { changeInput, spell, endGame } from "../actions";
 import { SpellResult } from "./SpellResult";
 import GameEndedModal from "./GameEndedModal";
+import { showSpelled } from "../../speller/actions";
+import SpelledModal from "./SpelledModal";
 
 interface StateProps {
   prefix?: string;
   prefixParams: PrefixParams;
   blankValue: string;
   unspelledCount: number;
+  spelledCount: number;
   spellState: SpellState;
   lastSpelled?: string;
   canSpell: boolean;
@@ -34,6 +38,7 @@ interface DispatchProps {
   onChangeBlankValue: Effect.Effect<string>;
   onSpell: Effect.Effect0;
   onEndGame: Effect.Effect0;
+  onShowSpelled: Effect.Effect0;
 }
 
 type Props = StateProps & DispatchProps;
@@ -51,16 +56,19 @@ export class App extends React.PureComponent<Props> {
       prefixParams,
       blankValue,
       unspelledCount,
+      spelledCount,
       lastSpelled,
       spellState,
       canSpell,
       onChangeBlankValue,
-      onEndGame
+      onEndGame,
+      onShowSpelled
     } = this.props;
 
     return (
       <div className="LearnerApp">
         <GameEndedModal />
+        <SpelledModal />
         <Page
           footer={
             <Actions
@@ -83,6 +91,8 @@ export class App extends React.PureComponent<Props> {
               unspelledCount={unspelledCount}
               prefix={prefix}
               wordLength={prefixParams.wordLength}
+              onShowSpelled={onShowSpelled}
+              spelledCount={spelledCount}
             />
           }
         >
@@ -118,6 +128,7 @@ const mapStateToProps = (state: State): StateProps => ({
   prefixParams: getPrefixParams(state),
   blankValue: getBlankValue(state),
   unspelledCount: getUnspelledCount(state),
+  spelledCount: getSpelledCount(state),
   spellState: getSpellState(state),
   lastSpelled: getLastSpelled(state),
   canSpell: getCanSpell(state)
@@ -126,7 +137,8 @@ const mapStateToProps = (state: State): StateProps => ({
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   onChangeBlankValue: value => dispatch(changeInput(value)),
   onSpell: () => dispatch(spell()),
-  onEndGame: () => dispatch(endGame())
+  onEndGame: () => dispatch(endGame()),
+  onShowSpelled: () => dispatch(showSpelled(true))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
