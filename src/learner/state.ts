@@ -3,6 +3,42 @@ const DEFAULT_PREFIX_PARAMS = {
   wordLength: 4
 };
 
+const getParams = (): Record<string, string> => {
+  const search = window.location.href.slice(
+    window.location.href.indexOf("?") + 1
+  );
+
+  try {
+    const paramList = search.indexOf("=") >= 0 ? search.split("&") : [];
+    const params = paramList.reduce((acc: Record<string, string>, cur) => {
+      if (cur.indexOf("=") >= 0) {
+        const parts = cur.split("=");
+        acc[parts[0]] = parts[1];
+      }
+      return acc;
+    }, {});
+
+    return params;
+  } catch (e) {
+    console.error("Failed to parse search string " + search);
+    return {};
+  }
+};
+
+const defaultPrefixparams = () => {
+  const params = getParams();
+  const prefixLengthArg = parseInt(params["p"]);
+  const wordLengthArg = parseInt(params["w"]);
+  const prefixLength = !Number.isNaN(prefixLengthArg)
+    ? Math.min(Math.max(prefixLengthArg, 0), 4)
+    : DEFAULT_PREFIX_PARAMS.prefixLength;
+  const wordLength = !Number.isNaN(wordLengthArg)
+    ? Math.min(Math.max(wordLengthArg, 0), 6)
+    : DEFAULT_PREFIX_PARAMS.wordLength;
+
+  return { prefixLength, wordLength };
+};
+
 export interface PrefixParams {
   prefixLength: number;
   wordLength: number;
@@ -28,7 +64,7 @@ export const create = (init: Partial<State> = {}): State => ({
   missed: new Set(),
   spellState: "Spelling",
   blankValue: "",
-  prefixParams: DEFAULT_PREFIX_PARAMS,
+  prefixParams: defaultPrefixparams(),
   gameOver: false,
   ...init
 });
