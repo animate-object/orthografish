@@ -14,3 +14,19 @@
 .Missed {
   color: var(--gray);
 }
+
+.Good {
+  color: var(--green);
+}
+
+.Okay {
+  color: var(--blue);
+}
+
+.Bad {
+  color: var(--yellow);
+}
+
+.Awful {
+  color: var(--red);
+}

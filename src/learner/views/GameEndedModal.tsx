@@ -8,11 +8,13 @@ import {
   getGaveUp,
   getUnspelled,
   getSpelled,
-  getMissed
+  getMissed,
+  getGameRating
 } from "../selectors";
-import { Effect } from "../../common/types";
+import { Effect, ArrayUtils } from "../../common/types";
 import { requestNewGame } from "../actions";
 import "./GameEndedModal.css";
+import classNames from "classnames";
 
 interface StateProps {
   gameEnded: boolean;
@@ -20,6 +22,7 @@ interface StateProps {
   unspelled: string[];
   spelled: string[];
   missed: string[];
+  rating: number;
 }
 
 interface DispatchProps {
@@ -34,6 +37,7 @@ export const GameEndedModal = ({
   unspelled,
   spelled,
   missed,
+  rating,
   onNewGame
 }: Props): JSX.Element => (
   <Modal
@@ -46,6 +50,19 @@ export const GameEndedModal = ({
       </Actions>
     }
   >
+    <div>
+      Your Score:{" "}
+      <span
+        className={classNames({
+          Good: rating > 80,
+          Okay: rating <= 80 && rating > 50,
+          Bad: rating <= 50 && rating > 0,
+          Awful: rating <= 0
+        })}
+      >
+        {rating.toFixed(2)}
+      </span>
+    </div>
     {spelled.length > 0 && (
       <div>
         <hr />
@@ -78,7 +95,7 @@ export const GameEndedModal = ({
 
 const WordList = (props: { words: string[] }): JSX.Element => (
   <>
-    {props.words.map(word => (
+    {ArrayUtils.sorted(props.words).map(word => (
       <div key={word}>{word}</div>
     ))}
   </>
@@ -89,7 +106,8 @@ export const mapStateToProps = (state: State): StateProps => ({
   gaveUp: getGaveUp(state),
   unspelled: getUnspelled(state),
   spelled: getSpelled(state),
-  missed: getMissed(state)
+  missed: getMissed(state),
+  rating: getGameRating(state)
 });
 export const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   onNewGame: () => dispatch(requestNewGame())

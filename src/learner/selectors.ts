@@ -70,3 +70,13 @@ export const getGaveUp = createSelector(
   getGameEnded,
   (unspelledCount, gameEnded) => gameEnded && unspelledCount !== 0
 );
+
+export const getGameRating = createSelector(
+  getState,
+  ({ spelled, unspelled, missed }) => {
+    const totalPossible = spelled.size + unspelled.size;
+    const spelledFactor = spelled.size / totalPossible;
+    const missedFactor = missed.size / totalPossible;
+    return 100 * spelledFactor - 100 * missedFactor;
+  }
+);

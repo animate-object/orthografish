@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import { SpellerApp } from "./speller";
 import { LearnerApp } from "./learner";
-import { Route, BrowserRouter as Router } from "react-router-dom";
+import { Route, HashRouter as Router } from "react-router-dom";
 
 ReactDOM.render(
   <Router>
