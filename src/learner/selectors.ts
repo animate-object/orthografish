@@ -77,6 +77,6 @@ export const getGameRating = createSelector(
     const totalPossible = spelled.size + unspelled.size;
     const spelledFactor = spelled.size / totalPossible;
     const missedFactor = missed.size / totalPossible;
-    return 100 * spelledFactor - 100 * missedFactor;
+    return 100 * spelledFactor - 25 * missedFactor;
   }
 );
