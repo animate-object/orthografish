@@ -1,8 +1,10 @@
-.Spelled {
+.Spelled,
+.Spelled > a {
   color: var(--green);
 }
 
-.Unspelled {
+.Unspelled,
+.Unspelled > a {
   color: var(--red);
 }
 

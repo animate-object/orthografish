@@ -69,7 +69,7 @@ export const GameEndedModal = ({
         <hr />
         You spelled these words:{" "}
         <div className="Spelled">
-          <WordList words={spelled} />
+          <WordList link words={spelled} />
         </div>
       </div>
     )}
@@ -78,7 +78,7 @@ export const GameEndedModal = ({
         <hr />
         You didn't spell these words:{" "}
         <div className="Unspelled">
-          <WordList words={unspelled} />
+          <WordList link words={unspelled} />
         </div>
       </div>
     )}

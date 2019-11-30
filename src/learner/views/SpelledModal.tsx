@@ -30,7 +30,7 @@ export const SpelledModal = ({ spelled, visible, onClose }: Props) => (
       </Actions>
     }
   >
-    <WordList words={spelled} />
+    <WordList link words={spelled} />
   </LearnerModal>
 );
 
