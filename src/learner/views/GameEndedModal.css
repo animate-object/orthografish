@@ -1,0 +1,16 @@
+.GameEndedModal {
+  background-color: var(--white);
+  color: var(--blue);
+}
+
+.Spelled {
+  color: var(--green);
+}
+
+.Unspelled {
+  color: var(--red);
+}
+
+.Missed {
+  color: var(--gray);
+}
