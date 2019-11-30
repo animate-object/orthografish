@@ -9,6 +9,7 @@ interface Props {
   letterCount: number;
   spacing?: number;
   classes?: string[];
+  inputRef?: React.RefObject<HTMLInputElement>;
 }
 
 interface State {
@@ -54,6 +55,7 @@ export class SizedInput extends React.PureComponent<Props, State> {
           w
         </span>
         <input
+          ref={this.props.inputRef}
           className={classNames(classes)}
           style={{
             width: letterWidthPx * letterCount,

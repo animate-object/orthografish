@@ -1,5 +1,3 @@
-import { PrefixParams } from "./state";
-
 export enum ActionTypes {
   REQUEST_NEW_GAME = "REQUEST_NEW_GAME",
   START_NEW_GAME = "START_NEW_GAME",

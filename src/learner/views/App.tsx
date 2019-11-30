@@ -39,6 +39,8 @@ interface DispatchProps {
 type Props = StateProps & DispatchProps;
 
 export class App extends React.PureComponent<Props> {
+  private blankInputRef: React.RefObject<HTMLInputElement> = React.createRef();
+
   public constructor(props: Props) {
     super(props);
   }
@@ -53,7 +55,6 @@ export class App extends React.PureComponent<Props> {
       spellState,
       canSpell,
       onChangeBlankValue,
-      onSpell,
       onEndGame
     } = this.props;
 
@@ -65,7 +66,7 @@ export class App extends React.PureComponent<Props> {
             <Actions
               left={
                 unspelledCount !== 0 && (
-                  <Button onClick={onSpell} disabled={!canSpell}>
+                  <Button onClick={this.handleSpell} disabled={!canSpell}>
                     Spell
                   </Button>
                 )
@@ -88,6 +89,7 @@ export class App extends React.PureComponent<Props> {
           {prefix ? (
             <>
               <FillTheBlank
+                inputRef={this.blankInputRef}
                 prefix={prefix}
                 wordLength={prefixParams.wordLength}
                 blankValue={blankValue}
@@ -102,6 +104,13 @@ export class App extends React.PureComponent<Props> {
       </div>
     );
   }
+
+  private handleSpell = () => {
+    this.props.onSpell();
+    if (this.blankInputRef.current !== null) {
+      this.blankInputRef.current.focus();
+    }
+  };
 }
 
 const mapStateToProps = (state: State): StateProps => ({

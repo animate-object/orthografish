@@ -54,9 +54,9 @@ export const GameEndedModal = ({
       Your Score:{" "}
       <span
         className={classNames({
-          Good: rating > 80,
-          Okay: rating <= 80 && rating > 50,
-          Bad: rating <= 50 && rating > 0,
+          Good: rating > 70,
+          Okay: rating <= 50 && rating > 25,
+          Bad: rating <= 25 && rating > 0,
           Awful: rating <= 0
         })}
       >
