@@ -21,7 +21,6 @@ export interface StartNewGame {
 
 export interface Spell {
   type: ActionTypes.SPELL;
-  word: string;
 }
 
 export interface ChangeInput {
@@ -42,9 +41,8 @@ export const startNewGame = (
   prefix
 });
 
-export const spell = (word: string): Spell => ({
-  type: ActionTypes.SPELL,
-  word
+export const spell = (): Spell => ({
+  type: ActionTypes.SPELL
 });
 
 export const changeInput = (newValue: string): ChangeInput => ({

@@ -15,9 +15,13 @@ export const getBlankValue = createSelector(
   state => state.blankValue
 );
 
-export const getUnspelled = createSelector(getState, state => state.unspelled);
+export const getUnspelled = createSelector(getState, state =>
+  Array.from(state.unspelled)
+);
 
-export const getSpelled = createSelector(getState, state => state.spelled);
+export const getSpelled = createSelector(getState, state =>
+  Array.from(state.spelled)
+);
 
 export const getUnspelledCount = createSelector(
   getUnspelled,
@@ -27,4 +31,14 @@ export const getUnspelledCount = createSelector(
 export const getSpelledCount = createSelector(
   getSpelled,
   spelled => spelled.length
+);
+
+export const getSpellState = createSelector(
+  getState,
+  state => state.spellState
+);
+
+export const getLastSpelled = createSelector(
+  getState,
+  state => state.lastSpelled
 );

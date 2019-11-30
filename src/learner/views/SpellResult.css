@@ -1,0 +1,17 @@
+.SpellResult {
+  padding-top: 1rem;
+  font-size: var(--font-md);
+  height: var(--font-md);
+}
+
+.Correct {
+  color: var(--green);
+}
+
+.Incorrect {
+  color: var(--red);
+}
+
+.Previous {
+  color: var(--gray);
+}

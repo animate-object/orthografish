@@ -8,3 +8,7 @@
   color: var(--white);
   padding: 0.5rem;
 }
+
+.ToGo {
+  font-size: var(--font-md);
+}
