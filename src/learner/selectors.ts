@@ -15,6 +15,11 @@ export const getBlankValue = createSelector(
   state => state.blankValue
 );
 
+export const getBlankValueLength = createSelector(
+  getState,
+  state => state.prefixParams.wordLength - state.prefixParams.prefixLength
+);
+
 export const getUnspelled = createSelector(getState, state =>
   Array.from(state.unspelled)
 );
@@ -41,4 +46,10 @@ export const getSpellState = createSelector(
 export const getLastSpelled = createSelector(
   getState,
   state => state.lastSpelled
+);
+
+export const getCanSpell = createSelector(
+  getBlankValue,
+  getBlankValueLength,
+  (value, length) => value.length === length
 );

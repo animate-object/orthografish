@@ -15,7 +15,9 @@ export const LearnerHeader = ({
 }: Props): JSX.Element => (
   <Header>
     There {unspelledCount === 1 ? "is" : "are"}{" "}
-    <span className="LeftToSpell">{unspelledCount}</span>{" "}
+    <span className="LeftToSpell">
+      {unspelledCount === 0 ? "no" : unspelledCount}
+    </span>{" "}
     {`more ${wordLength} letter ${unspelledCount === 1 ? "word" : "words"}
     starting with ${prefix || "..."}`}
   </Header>

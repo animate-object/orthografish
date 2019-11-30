@@ -7,7 +7,8 @@ import {
   getBlankValue,
   getUnspelledCount,
   getLastSpelled,
-  getSpellState
+  getSpellState,
+  getCanSpell
 } from "../selectors";
 import { connect } from "react-redux";
 import "./App.css";
@@ -25,6 +26,7 @@ interface StateProps {
   unspelledCount: number;
   spellState: SpellState;
   lastSpelled?: string;
+  canSpell: boolean;
 }
 
 interface DispatchProps {
@@ -47,6 +49,7 @@ export class App extends React.PureComponent<Props> {
       unspelledCount,
       lastSpelled,
       spellState,
+      canSpell,
       onChangeBlankValue,
       onSpell
     } = this.props;
@@ -54,7 +57,15 @@ export class App extends React.PureComponent<Props> {
     return (
       <div className="LearnerApp">
         <Page
-          footer={<Actions left={<Button onClick={onSpell}>Spell</Button>} />}
+          footer={
+            <Actions
+              left={
+                <Button onClick={onSpell} disabled={!canSpell}>
+                  Spell
+                </Button>
+              }
+            />
+          }
           header={
             <LearnerHeader
               unspelledCount={unspelledCount}
@@ -88,7 +99,8 @@ const mapStateToProps = (state: State): StateProps => ({
   blankValue: getBlankValue(state),
   unspelledCount: getUnspelledCount(state),
   spellState: getSpellState(state),
-  lastSpelled: getLastSpelled(state)
+  lastSpelled: getLastSpelled(state),
+  canSpell: getCanSpell(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
