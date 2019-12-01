@@ -14,7 +14,7 @@
 .ActionBar {
   width: 100%;
   flex-shrink: 1;
-  height: 2rem;
+  min-height: 2rem;
 }
 
 .PageContent {
