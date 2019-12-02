@@ -1,5 +1,9 @@
 .LeftToSpell {
-  color: var(--green);
+  color: var(--blue);
+}
+
+.HeaderPrefix {
+  color: var(--blue);
 }
 
 .SpelledButton {

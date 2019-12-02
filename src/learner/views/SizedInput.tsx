@@ -6,6 +6,7 @@ import classNames from "classnames";
 interface Props {
   value: string;
   onChange: Effect.Effect<string>;
+  onEnter?: Effect.Effect<string>;
   letterCount: number;
   spacing?: number;
   classes?: string[];
@@ -64,6 +65,7 @@ export class SizedInput extends React.PureComponent<Props, State> {
           }}
           value={value}
           onChange={this.handleChange}
+          onKeyDown={this.handleEnter}
         />
       </>
     );
@@ -71,6 +73,12 @@ export class SizedInput extends React.PureComponent<Props, State> {
 
   private handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     this.props.onChange(evt.target.value);
+  };
+
+  private handleEnter = (evt: React.KeyboardEvent<HTMLInputElement>) => {
+    if (evt.key === "Enter" && this.props.onEnter) {
+      this.props.onEnter(evt.currentTarget.value);
+    }
   };
 
   private measure() {

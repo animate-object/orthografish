@@ -25,7 +25,8 @@ export const LearnerHeader = ({
       {unspelledCount === 0 ? "no" : unspelledCount}
     </span>{" "}
     {`more ${wordLength} letter ${unspelledCount === 1 ? "word" : "words"}
-    starting with ${prefix || "..."}`}
+    starting with`}{" "}
+    <span className="HeaderPrefix">{prefix || "..."}</span>
     {spelledCount > 0 && (
       <div>
         <Button size="Small" buttonType="Accent" onClick={onShowSpelled}>

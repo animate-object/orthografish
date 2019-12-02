@@ -69,34 +69,34 @@ export class App extends React.PureComponent<Props> {
       <div className="LearnerApp">
         <GameEndedModal />
         <SpelledModal />
-        <Page
-          footer={
-            <Actions
-              left={
-                unspelledCount !== 0 && (
-                  <Button onClick={this.handleSpell} disabled={!canSpell}>
-                    Spell
+        {prefix ? (
+          <Page
+            footer={
+              <Actions
+                left={
+                  unspelledCount !== 0 && (
+                    <Button onClick={this.handleSpell} disabled={!canSpell}>
+                      Spell
+                    </Button>
+                  )
+                }
+                right={
+                  <Button onClick={onEndGame} buttonType="Secondary">
+                    {unspelledCount === 0 ? "End Game" : "Give Up"}
                   </Button>
-                )
-              }
-              right={
-                <Button onClick={onEndGame} buttonType="Secondary">
-                  {unspelledCount === 0 ? "End Game" : "Give Up"}
-                </Button>
-              }
-            />
-          }
-          header={
-            <LearnerHeader
-              unspelledCount={unspelledCount}
-              prefix={prefix}
-              wordLength={prefixParams.wordLength}
-              onShowSpelled={onShowSpelled}
-              spelledCount={spelledCount}
-            />
-          }
-        >
-          {prefix ? (
+                }
+              />
+            }
+            header={
+              <LearnerHeader
+                unspelledCount={unspelledCount}
+                prefix={prefix}
+                wordLength={prefixParams.wordLength}
+                onShowSpelled={onShowSpelled}
+                spelledCount={spelledCount}
+              />
+            }
+          >
             <>
               <FillTheBlank
                 inputRef={this.blankInputRef}
@@ -104,13 +104,14 @@ export class App extends React.PureComponent<Props> {
                 wordLength={prefixParams.wordLength}
                 blankValue={blankValue}
                 onChange={onChangeBlankValue}
+                onEnter={this.handleSpell}
               />
               <SpellResult spellState={spellState} lastSpelled={lastSpelled} />
             </>
-          ) : (
-            "Loading . . ."
-          )}
-        </Page>
+          </Page>
+        ) : (
+          "Loading . . ."
+        )}
       </div>
     );
   }
